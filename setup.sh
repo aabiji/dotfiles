@@ -18,7 +18,7 @@ curl -fsSL https://bun.sh/install | bash # Install bun
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # Install rust
 
 sudo apt update
-sudo apt install vim git cloc python3-pip build-essential curl yt-dlp ripgrep wezterm code p7zip-full gocryptfs
+sudo apt install vim-gtk3 git cloc python3-pip build-essential curl yt-dlp ripgrep wezterm code p7zip-full gocryptfs zsh
 sudo snap install obsidian --classic # Install Obsidian
 
 # Install google chrome
@@ -53,11 +53,14 @@ cd ~ && mv dev/archive/journal .
 sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap update
 
 # Symlink my config files
-cd ~/dev/archive/configs/dotfiles
-for entry in ~/dev/archive/configs/dotfiles/.*; do
+cd ~/dev/archive/dotfiles/dotfiles
+for entry in ~/dev/archive/dotfiles/dotfiles/.*; do
     filename=$(basename "$entry") # Get just the filename
     if [[ "$filename" == "." || "$filename" == ".." ]]; then
         continue # Skip . and .. entries
     fi
     ln -s "$entry" "/home/aabiji/$filename" # Create the symlink
 done
+
+# Switch to zsh
+chsh -s /bin/zsh aabiji
