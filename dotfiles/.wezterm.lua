@@ -2,7 +2,7 @@ local wezterm = require('wezterm')
 local config = wezterm.config_builder()
 local act = wezterm.action
 
-config.font = wezterm.font("Roboto Mono")
+config.font = wezterm.font("JetBrains Mono")
 config.font_size = 10.5
 config.color_scheme = "Apple System Colors"
 config.enable_tab_bar = false

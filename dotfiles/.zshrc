@@ -1,6 +1,5 @@
 # Aliases and exports
-alias rm="rm -rf"
-alias cp="cp -r"
+alias rm="rm -rf" alias cp="cp -r"
 alias ls="ls -a --color"
 alias activate="source .venv/bin/activate"
 alias push="git add -p && git commit && git push"
@@ -16,8 +15,8 @@ export PATH=$BUN_INSTALL/bin:$PATH
 # Init git support
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git:*' unstagedstr 'x '
-zstyle ':vcs_info:git:*' formats '%F{blue}%s:(%f%F{red}%b%f%F{blue})%f %F{yellow}%u%f'
+zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' formats '%F{blue}%s:(%f%F{red}%b%f%F{yellow}%u%f%F{blue})%f '
 precmd() { vcs_info }
 
 # Setup prompt
