@@ -1,9 +1,9 @@
 # Aliases and exports
 alias rm="rm -rf" alias cp="cp -r"
 alias ls="ls -a --color"
-alias activate="source .venv/bin/activate"
+alias activate="source .venv/bin/activate" # activate python virtual environments
 alias push="git add -p && git commit && git push"
-update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean && sudo snap refresh"
+update="sudo apt update && sudo apt upgrade -y && sudo snap refresh"
 alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
 
