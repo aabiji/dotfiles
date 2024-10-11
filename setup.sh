@@ -1,7 +1,12 @@
-#!/bin/sh
+#!/bin/bash
+
+# Install prerequisites
+sudo apt install curl wget gpg
+
+curl -fsSL https://bun.sh/install | bash # Install bun
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # Install rust
 
 # Setup package manager for vscode
-sudo apt-get install wget gpg
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
 echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
@@ -14,11 +19,13 @@ rm -f packages.microsoft.gpg
 && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
 && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
-curl -fsSL https://bun.sh/install | bash # Install bun
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # Install rust
+# Setup package manager for wezterm
+curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
 
+# Install packages
 sudo apt update
-sudo apt install vim-gtk3 git cloc python3-pip build-essential curl yt-dlp ripgrep wezterm code p7zip-full gocryptfs zsh
+sudo apt install vim-gtk3 git cloc python3-pip build-essential snapd yt-dlp ripgrep wezterm code p7zip-full gocryptfs zsh
 sudo snap install obsidian --classic # Install Obsidian
 
 # Install google chrome
@@ -36,6 +43,7 @@ curl -s https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest \
 7z x *.zip
 sudo mv fonts/ttf/JetBrainsMono-Regular.ttf /usr/share/fonts/truetype/
 sudo fc-cache -f -v
+rm -rf fonts OFL.txt AUTHORS.txt
 
 # Clone all repos to the dev/archive folder
 sudo apt install gh
@@ -44,7 +52,9 @@ ssh-keygen && gh auth login
 gh repo list aabiji --limit 4000 | while read -r repo _; do
     gh repo clone "$repo" "$repo"
 done
-sudo apt purge gh # TODO: remove the repository too
+sudo apt purge gh
+mv ~/dev/archive/aabiji/* ~/dev/archive
+rm ~/dev/archive/aabiji
 
 # Setup journal
 cd ~ && mv dev/archive/journal .
@@ -53,8 +63,9 @@ cd ~ && mv dev/archive/journal .
 sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap update
 
 # Symlink my config files
-cd ~/dev/archive/dotfiles/dotfiles
-for entry in ~/dev/archive/dotfiles/dotfiles/.*; do
+mv ~/dev/archive/dotfiles ~/dev/dotfiles
+cd ~/dev/dotfiles/dotfiles
+for entry in ~/dev/dotfiles/dotfiles/.*; do
     filename=$(basename "$entry") # Get just the filename
     if [[ "$filename" == "." || "$filename" == ".." ]]; then
         continue # Skip . and .. entries
