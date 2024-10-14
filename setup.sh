@@ -26,7 +26,9 @@ echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/w
 # Install packages
 sudo apt update
 sudo apt install vim-gtk3 git cloc python3-pip build-essential snapd yt-dlp ripgrep wezterm code p7zip-full gocryptfs zsh
+
 sudo snap install obsidian --classic # Install Obsidian
+sudo snap install go --classic
 
 # Install google chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb

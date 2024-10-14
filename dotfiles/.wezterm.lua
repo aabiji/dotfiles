@@ -2,15 +2,15 @@ local wezterm = require('wezterm')
 local config = wezterm.config_builder()
 local act = wezterm.action
 
-config.font = wezterm.font("JetBrains Mono")
-config.font_size = 10.5
+config.font = wezterm.font("SF Mono")
+config.font_size = 10
 config.color_scheme = "Apple System Colors"
 config.enable_tab_bar = false
 config.enable_scroll_bar = false
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 config.window_close_confirmation = 'NeverPrompt'
-config.initial_cols = 84
-config.initial_rows = 22
+config.initial_cols = 82
+config.initial_rows = 26
 
 config.keys = {
   {
