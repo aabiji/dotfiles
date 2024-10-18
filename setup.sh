@@ -12,68 +12,55 @@ sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/
 echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
 rm -f packages.microsoft.gpg 
 
-# Setup package manager for gh
-(type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
-&& sudo mkdir -p -m 755 /etc/apt/keyrings \
-&& wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-
-# Setup package manager for wezterm
-curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
-echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
-
 # Install packages
 sudo apt update
-sudo apt install vim-gtk3 git cloc python3-pip build-essential snapd yt-dlp ripgrep wezterm code p7zip-full gocryptfs zsh
+sudo apt install vim-gtk3 git cloc python3-pip build-essential yt-dlp code p7zip-full gocryptfs zsh golang-go
 
-sudo snap install obsidian --classic # Install Obsidian
-sudo snap install go --classic
+# Install obsidian
+curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest \
+| grep "browser_download_url.*deb" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
+mv *.deb obsidian.deb
+sudo apt install ./obsidian.deb
 
-# Install google chrome
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb
-sudo apt -f install
-sudo apt - fix-broken install
-
-# Install the JetBrains Mono font
-curl -s https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest \
-	| grep ".*zip" \
-	| cut -d : -f 2,3 \
-	| tr -d \" \
-	| wget -qi -
-7z x *.zip
-sudo mv fonts/ttf/JetBrainsMono-Regular.ttf /usr/share/fonts/truetype/
-sudo fc-cache -f -v
-rm -rf fonts OFL.txt AUTHORS.txt
+# Temporarily install gh
+curl -s https://api.github.com/repos/cli/cli/releases/latest \
+| jq -r '.assets[] | select(.name | test("linux_amd64")) | .browser_download_url' \
+| xargs curl -L -o gh.tar.gz
+7z x gh.tar.gz && 7z x data.tar
+sudo mv usr/bin/gh /usr/bin
 
 # Clone all repos to the dev/archive folder
-sudo apt install gh
 cd ~ && mkdir -p dev/archive && cd dev/archive
 ssh-keygen && gh auth login
 gh repo list aabiji --limit 4000 | while read -r repo _; do
     gh repo clone "$repo" "$repo"
 done
-sudo apt purge gh
 mv ~/dev/archive/aabiji/* ~/dev/archive
-rm ~/dev/archive/aabiji
+sudo rm ~/dev/archive/aabiji /usr/bin/gh
 
-# Setup journal
+# Setup journal and dotfiles
 cd ~ && mv dev/archive/journal .
-
-# Update 
-sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap update
-
-# Symlink my config files
 mv ~/dev/archive/dotfiles ~/dev/dotfiles
-cd ~/dev/dotfiles/dotfiles
-for entry in ~/dev/dotfiles/dotfiles/.*; do
+
+# Symlink my dotfiles
+cd ~/dev/dotfiles
+for entry in ~/dev/dotfiles/.*; do
     filename=$(basename "$entry") # Get just the filename
-    if [[ "$filename" == "." || "$filename" == ".." ]]; then
-        continue # Skip . and .. entries
+    if [[
+        "$filename" == "." ||
+        "$filename" == ".." ||
+        "$filename" == *.sh ||
+        "$filename" == ".git" ]]; then
+        continue # Skip unwanted entries 
     fi
     ln -s "$entry" "/home/aabiji/$filename" # Create the symlink
 done
 
 # Switch to zsh
 chsh -s /bin/zsh aabiji
+
+# Update 
+sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap update
