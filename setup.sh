@@ -14,7 +14,7 @@ rm -f packages.microsoft.gpg
 
 # Install packages
 sudo apt update
-sudo apt install vim-gtk3 git cloc python3-pip build-essential yt-dlp code p7zip-full gocryptfs zsh golang-go
+sudo apt install vim-gtk3 git cloc python3-pip build-essential yt-dlp code p7zip-full gocryptfs zsh golang-go gnome-tweaks
 
 # Install obsidian
 curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest \
@@ -39,7 +39,8 @@ gh repo list aabiji --limit 4000 | while read -r repo _; do
     gh repo clone "$repo" "$repo"
 done
 mv ~/dev/archive/aabiji/* ~/dev/archive
-sudo rm ~/dev/archive/aabiji /usr/bin/gh
+sudo rm /usr/bin/gh
+rm -r ~/dev/archive/aabiji
 
 # Setup journal and dotfiles
 cd ~ && mv dev/archive/journal .
@@ -63,4 +64,4 @@ done
 chsh -s /bin/zsh aabiji
 
 # Update 
-sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap update
+sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap refresh 
