@@ -1,4 +1,5 @@
 # Aliases and exports
+alias vim="nvim"
 alias rm="rm -rf" alias cp="cp -r"
 alias ls="ls -a --color"
 alias activate="source .venv/bin/activate" # activate python virtual environments
@@ -7,7 +8,7 @@ update="sudo apt update && sudo apt upgrade -y && sudo snap refresh"
 alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
 
-export EDITOR="vim"
+export EDITOR="nvim"
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
 . "$HOME/.cargo/env" # Rust cargo

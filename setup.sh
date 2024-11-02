@@ -14,7 +14,8 @@ rm -f packages.microsoft.gpg
 
 # Install packages
 sudo apt update
-sudo apt install vim-gtk3 git cloc python3-pip build-essential yt-dlp code p7zip-full gocryptfs zsh golang-go gnome-tweaks
+sudo apt install git kitty cloc python3-pip build-essential yt-dlp code p7zip-full gocryptfs zsh golang-go gnome-tweaks wl-clipboard ripgrep
+sudo snap install neovim --classic
 
 # Install obsidian
 curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest \
@@ -47,18 +48,27 @@ cd ~ && mv dev/archive/journal .
 mv ~/dev/archive/dotfiles ~/dev/dotfiles
 
 # Symlink my dotfiles
-cd ~/dev/dotfiles
-for entry in ~/dev/dotfiles/.*; do
-    filename=$(basename "$entry") # Get just the filename
-    if [[
-        "$filename" == "." ||
-        "$filename" == ".." ||
-        "$filename" == *.sh ||
-        "$filename" == ".git" ]]; then
-        continue # Skip unwanted entries 
-    fi
-    ln -s "$entry" "/home/aabiji/$filename" # Create the symlink
-done
+traverse() {
+    local dir="$1"
+    for entry in "$dir"/.* "$dir"/*; do
+        filename=$(basename "$entry") # Get just the filename
+        if [[
+            "$filename" == "." ||
+            "$filename" == ".." ||
+            "$filename" == *.sh ||
+            "$filename" == .\*  ||
+            "$filename" == ".git" ]]; then
+            continue # Skip unwanted entries
+        fi
+
+        if [[ -d "$entry" ]]; then
+            traverse "$entry"  # Go into the directory 
+        else
+            ln -s "$entry" "/home/aabiji/$filename" # Create the symlink
+        fi
+    done
+}
+traverse ~/dev/dotfiles
 
 # Switch to zsh
 chsh -s /bin/zsh aabiji
