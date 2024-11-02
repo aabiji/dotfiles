@@ -15,7 +15,6 @@ vim.opt.cmdheight = 0
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 vim.opt.fillchars = {eob = " "}
-vim.opt.signcolumn = 'no'
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<M-m>", ":vsplit<CR>")
@@ -49,6 +48,7 @@ require("lazy").setup({
         highlight Normal ctermbg=none
         highlight NonText ctermbg=none
         highlight WinSeparator guifg=#546e7a ctermfg=145
+        highlight SignColumn guibg=none
       ]]
     end,
   },
