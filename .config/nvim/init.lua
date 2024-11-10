@@ -1,5 +1,3 @@
--- TODO: add breadcrumbs to the statusbar https://github.com/SmiteshP/nvim-navic
-
 vim.opt.number = false
 vim.opt.mouse = "a"
 vim.opt.showmode = false
@@ -41,22 +39,11 @@ require("lazy").setup({
     "tpope/vim-sleuth",
     { "lewis6991/gitsigns.nvim", opts = {} },
     {
-        --"kaicataldo/material.vim",
-        --"morhetz/gruvbox",
-        --"AlexvZyl/nordic.nvim",
-        "oxfist/night-owl.nvim",
+        "sainnhe/gruvbox-material",
         config = function()
-            require("night-owl").setup({ bold = false, italics = false, transparent_background = true })
-            vim.cmd.colorscheme("night-owl")
+            vim.g.gruvbox_material_transparent_background = 1
+            vim.cmd.colorscheme("gruvbox-material")
             vim.cmd.hi("Comment gui=none")
-            -- Transparency
-            vim.cmd [[
-              highlight Normal guibg=none
-              highlight NonText guibg=none
-              highlight Normal ctermbg=none
-              highlight NonText ctermbg=none
-              highlight SignColumn guibg=none
-            ]]
         end,
     },
     {
@@ -96,7 +83,7 @@ require("lazy").setup({
                 sections = {
                     lualine_a = { 'mode' },
                     lualine_b = { 'branch', 'diff', 'diagnostics' },
-                    lualine_c = { 'filename' },
+                    lualine_c = { 'filename', 'navic' },
                     lualine_x = {},
                     lualine_y = {},
                     lualine_z = { 'location' }
@@ -110,6 +97,7 @@ require("lazy").setup({
         dependencies = {
             "ms-jpq/coq_nvim", "ms-jpq/coq.artifacts",
             "williamboman/mason-lspconfig.nvim", "williamboman/mason.nvim",
+            "SmiteshP/nvim-navic",
             "lukas-reineke/lsp-format.nvim"
         },
         init = function()
@@ -120,6 +108,11 @@ require("lazy").setup({
             local on_attach = function(client, buffer)
                 -- Autoformat
                 require("lsp-format").on_attach(client, buffer)
+
+                -- LSP Breadcrumbs
+                if client.server_capabilities.documentSymbolProvider then
+                    require("nvim-navic").attach(client, buffer)
+                end
 
                 -- Disable semantic highlighting -- treesitter's enough
                 if client.server_capabilities.semanticTokensProvider then
