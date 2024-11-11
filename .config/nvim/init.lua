@@ -16,6 +16,9 @@ vim.opt.termguicolors = true
 vim.opt.background = "dark"
 vim.opt.fillchars = { eob = " " }
 vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.scrolloff = 10
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<M-m>", ":vsplit<CR>")
@@ -24,6 +27,8 @@ vim.keymap.set("n", "<M-h>", "<C-w><C-h>")
 vim.keymap.set("n", "<M-l>", "<C-w><C-l>")
 vim.keymap.set("n", "<M-j>", "<C-w><C-j>")
 vim.keymap.set("n", "<M-k>", "<C-w><C-k>")
+vim.keymap.set("n", "0", "_")
+vim.keymap.set("n", "_", "0")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -37,12 +42,26 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     "tpope/vim-sleuth",
-    { "lewis6991/gitsigns.nvim", opts = {} },
     {
-        "sainnhe/gruvbox-material",
+        "lewis6991/gitsigns.nvim",
         config = function()
-            vim.g.gruvbox_material_transparent_background = 1
-            vim.cmd.colorscheme("gruvbox-material")
+            require("gitsigns").setup({})
+        end
+    },
+    {
+        "tiagovla/tokyodark.nvim",
+        config = function()
+            require("tokyodark").setup({
+                transparent_background = true,
+                styles = {
+                    comments = { italic = true },
+                    keywords = { italic = false },
+                    identifiers = { italic = false },
+                    functions = {},
+                    variables = {},
+                },
+            })
+            vim.cmd.colorscheme("tokyodark")
             vim.cmd.hi("Comment gui=none")
         end,
     },
