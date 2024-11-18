@@ -1,6 +1,5 @@
 vim.opt.number = false
 vim.opt.mouse = "a"
-vim.opt.showmode = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.breakindent = true
 vim.opt.undofile = true
@@ -12,15 +11,20 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.list = false
 vim.opt.cmdheight = 0
-vim.opt.termguicolors = true
-vim.opt.background = "dark"
 vim.opt.fillchars = { eob = " " }
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.scrolloff = 10
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = "number"
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<C-t>", ":tabnew<CR>")
+vim.keymap.set("n", "<C-k>", ":tabnext<CR>")
+vim.keymap.set("n", "<C-j>", ":tabprev<CR>")
 vim.keymap.set("n", "<M-m>", ":vsplit<CR>")
 vim.keymap.set("n", "<M-n>", ":split<CR>")
 vim.keymap.set("n", "<M-h>", "<C-w><C-h>")
@@ -29,6 +33,9 @@ vim.keymap.set("n", "<M-j>", "<C-w><C-j>")
 vim.keymap.set("n", "<M-k>", "<C-w><C-k>")
 vim.keymap.set("n", "0", "_")
 vim.keymap.set("n", "_", "0")
+
+-- Disale auto commenting
+vim.cmd [[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -49,20 +56,16 @@ require("lazy").setup({
         end
     },
     {
-        "tiagovla/tokyodark.nvim",
+        "junegunn/seoul256.vim",
         config = function()
-            require("tokyodark").setup({
-                transparent_background = true,
-                styles = {
-                    comments = { italic = true },
-                    keywords = { italic = false },
-                    identifiers = { italic = false },
-                    functions = {},
-                    variables = {},
-                },
-            })
-            vim.cmd.colorscheme("tokyodark")
+            vim.opt.background = "dark"
+            vim.opt.termguicolors = true
             vim.cmd.hi("Comment gui=none")
+            vim.cmd [[
+                let g:seoul256_background = 234
+                color seoul256
+                hi WinSeparator guifg=#4f4e4e
+            ]]
         end,
     },
     {
@@ -95,8 +98,6 @@ require("lazy").setup({
             require('lualine').setup({
                 options = {
                     icons_enabled = false,
-                    component_separators = { left = ' ', right = ' ' },
-                    section_separators = { left = ' ', right = ' ' },
                     globalstatus = true,
                 },
                 sections = {
@@ -131,11 +132,6 @@ require("lazy").setup({
                 -- LSP Breadcrumbs
                 if client.server_capabilities.documentSymbolProvider then
                     require("nvim-navic").attach(client, buffer)
-                end
-
-                -- Disable semantic highlighting -- treesitter's enough
-                if client.server_capabilities.semanticTokensProvider then
-                    client.server_capabilities.semanticTokensProvider = nil
                 end
             end
 
