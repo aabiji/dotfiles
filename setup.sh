@@ -15,7 +15,7 @@ rm -f packages.microsoft.gpg
 # Install packages
 sudo apt update
 sudo apt install git kitty cloc python3-pip build-essential yt-dlp code p7zip-full gocryptfs zsh golang-go gnome-tweaks wl-clipboard ripgrep
-sudo snap install neovim --classic
+sudo snap install nvim --classic
 
 # Install obsidian
 curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest \
