@@ -21,6 +21,7 @@ vim.opt.cursorlineopt = "number"
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- TODO: define keybinding for go to definition in vertical split
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<C-t>", ":tabnew<CR>")
 vim.keymap.set("n", "<C-k>", ":tabnext<CR>")
@@ -56,16 +57,13 @@ require("lazy").setup({
         end
     },
     {
-        "junegunn/seoul256.vim",
+        "shaunsingh/nord.nvim",
         config = function()
-            vim.opt.background = "dark"
-            vim.opt.termguicolors = true
-            vim.cmd.hi("Comment gui=none")
-            vim.cmd [[
-                let g:seoul256_background = 234
-                color seoul256
-                hi WinSeparator guifg=#4f4e4e
-            ]]
+            vim.g.nord_bold = false
+            vim.g.nord_italic = false
+            vim.g.nord_borders = true
+            vim.g.nord_contrast = true
+            vim.cmd.colorscheme "nord"
         end,
     },
     {
@@ -96,10 +94,7 @@ require("lazy").setup({
         "nvim-lualine/lualine.nvim",
         config = function()
             require('lualine').setup({
-                options = {
-                    icons_enabled = false,
-                    globalstatus = true,
-                },
+                options = { icons_enabled = false, globalstatus = true },
                 sections = {
                     lualine_a = { 'mode' },
                     lualine_b = { 'branch', 'diff', 'diagnostics' },
@@ -128,6 +123,9 @@ require("lazy").setup({
             local on_attach = function(client, buffer)
                 -- Autoformat
                 require("lsp-format").on_attach(client, buffer)
+
+                -- Disable semantic highlighting
+                client.server_capabilities.semanticTokensProvider = nil
 
                 -- LSP Breadcrumbs
                 if client.server_capabilities.documentSymbolProvider then

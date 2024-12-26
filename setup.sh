@@ -75,3 +75,10 @@ chsh -s /bin/zsh aabiji
 
 # Update 
 sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap refresh 
+
+# Setup reminder cronjob
+crontab -l > mycron
+job="0 * * * * DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus notify-send 'Hourly reminder' 'Get up, look around and stretch' -u critical"
+echo "$job" >> mycron
+crontab mycron
+rm mycron

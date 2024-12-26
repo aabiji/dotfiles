@@ -1,6 +1,7 @@
 # Aliases and exports
 alias vim="nvim"
-alias rm="rm -rf" alias cp="cp -r"
+alias rm="rm -rf"
+alias cp="cp -r"
 alias ls="ls -a --color"
 alias activate="source .venv/bin/activate" # activate python virtual environments
 alias push="git add -p && git commit && git push"
@@ -9,9 +10,18 @@ alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
 
 export EDITOR="nvim"
+export PATH=$PATH:/home/aabiji/.local/bin
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
 . "$HOME/.cargo/env" # Rust cargo
+
+# Android Studio
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# Zig
+export PATH=$PATH:/home/aabiji/zig-linux-x86_64-0.13.0
 
 # Init git support
 autoload -Uz vcs_info
@@ -32,3 +42,6 @@ setopt sharehistory
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
+
+# bun completions
+[ -s "/home/aabiji/.bun/_bun" ] && source "/home/aabiji/.bun/_bun"
