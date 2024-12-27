@@ -21,7 +21,6 @@ vim.opt.cursorlineopt = "number"
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- TODO: define keybinding for go to definition in vertical split
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<C-t>", ":tabnew<CR>")
 vim.keymap.set("n", "<C-k>", ":tabnext<CR>")
@@ -34,6 +33,7 @@ vim.keymap.set("n", "<M-j>", "<C-w><C-j>")
 vim.keymap.set("n", "<M-k>", "<C-w><C-k>")
 vim.keymap.set("n", "0", "_")
 vim.keymap.set("n", "_", "0")
+vim.keymap.set("i", "<C-BS>", "<C-w>")
 
 -- Disale auto commenting
 vim.cmd [[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
@@ -57,11 +57,9 @@ require("lazy").setup({
         end
     },
     {
-        "shaunsingh/nord.nvim",
+        "gbprod/nord.nvim",
         config = function()
-            vim.g.nord_bold = false
-            vim.g.nord_italic = false
-            vim.cmd.colorscheme "nord"
+            vim.cmd.colorscheme("nord")
         end,
     },
     {
@@ -121,9 +119,6 @@ require("lazy").setup({
             local on_attach = function(client, buffer)
                 -- Autoformat
                 require("lsp-format").on_attach(client, buffer)
-
-                -- Disable semantic highlighting
-                client.server_capabilities.semanticTokensProvider = nil
 
                 -- LSP Breadcrumbs
                 if client.server_capabilities.documentSymbolProvider then
