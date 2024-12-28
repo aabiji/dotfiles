@@ -49,7 +49,20 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    "tpope/vim-sleuth",
+    {
+        "tpope/vim-sleuth",
+        config = function()
+            -- Javascript and typescript should use 2 spaces for indentation
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+                callback = function()
+                    vim.opt_local.tabstop = 2
+                    vim.opt_local.shiftwidth = 2
+                    vim.opt_local.expandtab = true
+                end,
+            })
+        end
+    },
     {
         "lewis6991/gitsigns.nvim",
         config = function()
@@ -143,6 +156,7 @@ require("lazy").setup({
             vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions)
             vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references)
             vim.keymap.set('n', 'gI', require('telescope.builtin').lsp_implementations)
+            vim.keymap.set('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
         end
     }
 })
