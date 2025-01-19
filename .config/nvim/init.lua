@@ -1,4 +1,3 @@
-vim.opt.number = false
 vim.opt.mouse = "a"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.breakindent = true
@@ -16,10 +15,8 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.scrolloff = 10
-vim.opt.cursorline = true
-vim.opt.cursorlineopt = "number"
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.cursorline = false
+vim.opt.relativenumber = false
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<C-t>", ":tabnew<CR>")
@@ -70,9 +67,11 @@ require("lazy").setup({
         end
     },
     {
-        "gbprod/nord.nvim",
+        "wtfox/jellybeans.nvim",
+        priority = 1000,
         config = function()
-            vim.cmd.colorscheme("nord")
+           require("jellybeans").setup()
+           vim.cmd.colorscheme("jellybeans")
         end,
     },
     {
@@ -103,7 +102,12 @@ require("lazy").setup({
         "nvim-lualine/lualine.nvim",
         config = function()
             require('lualine').setup({
-                options = { icons_enabled = false, globalstatus = true },
+                options = {
+                    icons_enabled = false,
+                    globalstatus = true,
+                    component_separators = { left = '', right = ''},
+                    section_separators = { left = '', right = ''}
+                },
                 sections = {
                     lualine_a = { 'mode' },
                     lualine_b = { 'branch', 'diff', 'diagnostics' },
