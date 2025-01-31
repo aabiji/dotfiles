@@ -10,7 +10,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # Install rust
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
 echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-rm -f packages.microsoft.gpg 
+rm -f packages.microsoft.gpg
 
 # Install packages
 sudo apt update
@@ -62,7 +62,7 @@ traverse() {
         fi
 
         if [[ -d "$entry" ]]; then
-            traverse "$entry"  # Go into the directory 
+            traverse "$entry"  # Go into the directory
         else
             ln -s "$entry" "/home/aabiji/$filename" # Create the symlink
         fi
@@ -73,8 +73,8 @@ traverse ~/dev/dotfiles
 # Switch to zsh
 chsh -s /bin/zsh aabiji
 
-# Update 
-sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap refresh 
+# Update
+sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap refresh
 
 # Setup reminder cronjob
 crontab -l > mycron

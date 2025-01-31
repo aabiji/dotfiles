@@ -17,6 +17,7 @@ vim.opt.expandtab = true
 vim.opt.scrolloff = 10
 vim.opt.cursorline = false
 vim.opt.relativenumber = false
+vim.cmd[[set shortmess+=I]]
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<C-t>", ":tabnew<CR>")
@@ -67,11 +68,28 @@ require("lazy").setup({
         end
     },
     {
-        "wtfox/jellybeans.nvim",
+        "sindrets/diffview.nvim",
+        config = function()
+            require("diffview").setup({})
+            toggle = 1
+            function toggleDiffView()
+                if toggle == 1 then
+                    vim.cmd[[DiffviewOpen]]
+                    toggle = 2
+                else
+                    vim.cmd[[DiffviewClose]]
+                    toggle = 1
+                end
+            end
+            vim.keymap.set("n", "<C-g>", ":lua toggleDiffView()<CR>")
+        end
+    },
+    {
+	"catppuccin/nvim",
         priority = 1000,
         config = function()
-           require("jellybeans").setup()
-           vim.cmd.colorscheme("jellybeans")
+	   require("catppuccin").setup({})
+           vim.cmd.colorscheme("catppuccin-macchiato")
         end,
     },
     {
@@ -88,33 +106,28 @@ require("lazy").setup({
     {
         "nvim-treesitter/nvim-treesitter",
         main = "nvim-treesitter.configs",
-        opts = {
-            ensure_installed = { "comment" },
-            auto_install = true,
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = {},
-            },
-            indent = { enable = true, disable = {} },
-        }
     },
     {
         "nvim-lualine/lualine.nvim",
         config = function()
+            local custom_catppuccin = require("lualine.themes.catppuccin-macchiato")
+            custom_catppuccin.normal.a.bg = "#24273a"
+            custom_catppuccin.normal.a.fg = "#cad3f5"
+            custom_catppuccin.normal.c.bg = "#24273a"
             require('lualine').setup({
                 options = {
-                    icons_enabled = false,
-                    globalstatus = true,
-                    component_separators = { left = '', right = ''},
-                    section_separators = { left = '', right = ''}
+                  icons_enabled = false,
+                  globalstatus = true,
+                  component_separators = { left = '', right = ''},
+                  section_separators = { left = '', right = ''},
+                  theme = custom_catppuccin
                 },
                 sections = {
-                    lualine_a = { 'mode' },
-                    lualine_b = { 'branch', 'diff', 'diagnostics' },
-                    lualine_c = { 'filename', 'navic' },
-                    lualine_x = {},
-                    lualine_y = {},
-                    lualine_z = { 'location' }
+                  lualine_a = {},
+                  lualine_b = { 'branch', 'diff', 'diagnostics' },
+                  lualine_c = { 'filename', 'navic' },
+                  lualine_x = {}, lualine_y = {},
+                  lualine_z = { 'location' }
                 },
             })
         end
