@@ -1,5 +1,4 @@
 # Aliases and exports
-alias vim="nvim"
 alias rm="rm -rf"
 alias cp="cp -r"
 alias ls="ls -a --color"
@@ -8,8 +7,9 @@ alias push="git add -p && git commit && git push"
 update="sudo apt update && sudo apt upgrade -y && sudo snap refresh"
 alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
+alias connect="bt-device -c 09:A6:90:34:CC:B2" # connect to bluetooth headphones
 
-export EDITOR="nvim"
+export EDITOR="vim"
 export PATH=$PATH:/home/aabiji/.local/bin
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
