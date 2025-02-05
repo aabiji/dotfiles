@@ -14,7 +14,7 @@
     "extensions.ignoreRecommendations": true,
     "git.confirmSync": false,
     "window.menuBarVisibility": "toggle",
-    "window.titleBarStyle": "native",
+    "window.titleBarStyle": "custom",
     "go.toolsManagement.autoUpdate": true,
     "git.openRepositoryInParentFolders": "never",
     "typescript.updateImportsOnFileMove.enabled": "always",

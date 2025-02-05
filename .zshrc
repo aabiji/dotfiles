@@ -7,7 +7,6 @@ alias push="git add -p && git commit && git push"
 update="sudo apt update && sudo apt upgrade -y && sudo snap refresh"
 alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
-alias connect="bt-device -c 09:A6:90:34:CC:B2" # connect to bluetooth headphones
 
 export EDITOR="vim"
 export PATH=$PATH:/home/aabiji/.local/bin
