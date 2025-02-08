@@ -1,0 +1,34 @@
+theme = "gruvbox"
+
+[editor]
+gutters = ["diff"]
+insert-final-newline = false
+auto-info = false
+clipboard-provider = "wayland"
+prompt-completion = false
+
+[editor.soft-wrap]
+enable = true
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.statusline]
+left = ["mode", "version-control", "file-name", "diagnostics"]
+right = ["position"]
+
+[editor.file-picker]
+hidden = false
+
+[keys.normal]
+A-j = "jump_view_down"
+A-k = "jump_view_up"
+A-l = "jump_view_right"
+A-h = "jump_view_left"
+p = ["paste_clipboard_after", "collapse_selection"]
+y = ["yank_to_clipboard", "collapse_selection"]
+0 = "goto_line_start"
+"$" = "goto_line_end"
+
+[keys.insert]
+C-backspace = "delete_word_backward"

@@ -1,6 +1,7 @@
 font-size = 10
 window-width = 90
 window-height = 28
+window-padding-color = extend
 theme = Dark Pastel
 font-family = Fira Code
 keybind = ctrl+shift+l=goto_split:right
@@ -9,3 +10,4 @@ keybind = ctrl+w=close_surface
 keybind = f11=toggle_fullscreen
 gtk-titlebar-hide-when-maximized = true
 background-opacity=0.9
+app-notifications = no-clipboard-copy

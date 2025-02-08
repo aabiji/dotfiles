@@ -8,16 +8,14 @@ update="sudo apt update && sudo apt upgrade -y && sudo snap refresh"
 alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
 
-export EDITOR="vim"
+# Helix
+export EDITOR="hx"
+export HELIX_RUNTIME=/home/aabiji/dev/helix/runtime
+
 export PATH=$PATH:/home/aabiji/.local/bin
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
 . "$HOME/.cargo/env" # Rust cargo
-
-# Android Studio
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # Zig
 export PATH=$PATH:/home/aabiji/zig-linux-x86_64-0.13.0
