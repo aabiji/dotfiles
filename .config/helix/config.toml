@@ -29,6 +29,8 @@ p = ["paste_clipboard_after", "collapse_selection"]
 y = ["yank_to_clipboard", "collapse_selection"]
 0 = "goto_line_start"
 "$" = "goto_line_end"
+x = ["extend_line_below", "yank_to_clipboard"]
+D = ["ensure_selections_forward", "extend_to_line_end"]
 
 [keys.insert]
 C-backspace = "delete_word_backward"
