@@ -14,7 +14,8 @@ rm -f packages.microsoft.gpg
 
 sudo add-apt-repository ppa:maveonair/helix-editor
 sudo apt update
-sudo apt install git kitty cloc python3-pip build-essential yt-dlp code p7zip-full gocryptfs zsh golang-go gnome-tweaks wl-clipboard ripgrep helix
+sudo apt install git cloc python3-pip build-essential yt-dlp code p7zip-full gocryptfs zsh golang-go gnome-tweaks helix
+sudo snap install spotify
 
 # Install obsidian
 curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest \
