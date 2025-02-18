@@ -8,10 +8,7 @@ update="sudo apt update && sudo apt upgrade -y && sudo snap refresh"
 alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
 
-# Helix
-export EDITOR="hx"
-export HELIX_RUNTIME=/home/aabiji/dev/helix/runtime
-
+export EDITOR="vim"
 export PATH=$PATH:/home/aabiji/.local/bin
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
@@ -19,6 +16,11 @@ export PATH=$BUN_INSTALL/bin:$PATH
 
 # Zig
 export PATH=$PATH:/home/aabiji/zig-linux-x86_64-0.13.0
+
+# Android studio
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # Init git support
 autoload -Uz vcs_info
