@@ -100,7 +100,7 @@ require("lazy").setup({
         "olimorris/onedarkpro.nvim",
         priority = 1000,
         config = function()
-            require("onedarkpro").setup({ options = { transparency = true } })
+            require("onedarkpro").setup({colors = {bg = "#14161a"}})
             vim.cmd.colorscheme("onedark_dark")
         end,
     },
