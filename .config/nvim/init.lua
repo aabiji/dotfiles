@@ -80,29 +80,22 @@ require("lazy").setup({
         end
     },
     {
-        "sindrets/diffview.nvim",
+        "olimorris/onedarkpro.nvim",
         config = function()
-            require("diffview").setup({})
-            toggle = 1
-            function toggleDiffView()
-                if toggle == 1 then
-                    vim.cmd[[DiffviewOpen]]
-                    toggle = 2
-                else
-                    vim.cmd[[DiffviewClose]]
-                    toggle = 1
-                end
-            end
-            vim.keymap.set("n", "<C-g>", ":lua toggleDiffView()<CR>")
-        end
+            require("onedarkpro").setup({colors = {dark = {bg = "#14161a"}}})
+        end,
     },
     {
-        "olimorris/onedarkpro.nvim",
-        priority = 1000,
-        config = function()
-            require("onedarkpro").setup({colors = {bg = "#14161a"}})
-            vim.cmd.colorscheme("onedark_dark")
-        end,
+        "f-person/auto-dark-mode.nvim",
+        opts = {
+            set_dark_mode = function()
+                vim.cmd("colorscheme onedark")
+            end,
+            set_light_mode = function()
+                vim.cmd("colorscheme onelight")
+            end,
+            fallback = "light"
+        }
     },
     {
         "nvim-telescope/telescope.nvim",
@@ -155,7 +148,6 @@ require("lazy").setup({
             "lukas-reineke/lsp-format.nvim"
         },
         init = function()
-            -- No message from our auto comple plugin!
             vim.g.coq_settings = { auto_start = "shut-up", keymap =  { jump_to_mark = "<c-\\" }, }
         end,
         config = function()
