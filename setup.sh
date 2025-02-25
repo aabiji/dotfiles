@@ -6,32 +6,11 @@ sudo apt install curl wget gpg
 curl -fsSL https://bun.sh/install | bash # Install bun
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # Install rust
 
-# Setup package manager for docker
-# Add Docker's official GPG key:
-sudo apt-get install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-# Add the repository to Apt sources:
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
 sudo apt update
-sudo apt install git cloc python3-pip build-essential yt-dlp code p7zip-full gocryptfs zsh golang-go gnome-tweaks
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-sudo snap install nvim --classic
-sudo snap install spotify
-
-# Install obsidian
-curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest \
-| grep "browser_download_url.*deb" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
-mv *.deb obsidian.deb
-sudo apt install ./obsidian.deb
+sudo apt install git cloc python3-pip build-essential yt-dlp code p7zip-full gocryptfs zsh golang-go gnome-tweaks vim-gtk3
+sudo snap install code --classic
+sudo snap install obsidian --classic
+sudo snap install spotify docker
 
 # Temporarily install gh
 curl -s https://api.github.com/repos/cli/cli/releases/latest \
