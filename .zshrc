@@ -8,32 +8,22 @@ update="sudo apt update && sudo apt upgrade -y && sudo snap refresh"
 alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
 
-export EDITOR="vim"
 export PATH=$PATH:/home/aabiji/.local/bin
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
 . "$HOME/.cargo/env" # Rust cargo
 
-# Zig
-export PATH=$PATH:/home/aabiji/zig-linux-x86_64-0.13.0
-
-# Android studio
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-# Init git support
+# Prompt with git support
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:git:*' unstagedstr '*'
 zstyle ':vcs_info:git:*' formats '%F{blue}%s:(%f%F{red}%b%f%F{yellow}%u%f%F{blue})%f '
+
+preexec() { unset vcs_info_msg_0_ }
 precmd() { vcs_info }
 
-# Setup prompt
 setopt prompt_subst
-PROMPT='%B%(?.%F{green}→%f.%F{red}→%f) %F{cyan}%1~%f ${vcs_info_msg_0_}%b'
-
-bindkey -e # Use emacs keybindings even if our EDITOR is set to vi
+#PROMPT='%B%(?.%F{green}→%f.%F{red}→%f) %F{cyan}%1~%f ${vcs_info_msg_0_}%b'
 
 # Setup history
 setopt histignorealldups
