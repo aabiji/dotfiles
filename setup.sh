@@ -1,26 +1,22 @@
 #!/bin/bash
 
-# Install bun
-sudo apt install curl
-curl -fsSL https://bun.sh/install | bash
-
 sudo apt update
-sudo apt install git python3-pip build-essential p7zip-full gocryptfs zsh gnome-tweaks vim-gtk3
+sudo apt install curl git python3-pip build-essential p7zip-full gocryptfs zsh vim-gtk3 gnome-tweaks
 sudo snap install code --classic
 sudo snap install obsidian --classic
 sudo snap install ghostty --classic
-sudo snap install spotify brave gh
+sudo snap install spotify brave
 sudo snap remove firefox
 
 # Clone all repos to the dev/archive folder
 cd ~ && mkdir -p dev/archive && cd dev/archive
-ssh-keygen && gh auth login
-gh repo list aabiji --limit 4000 | while read -r repo _; do
-    gh repo clone "$repo" "$repo"
+curl -sS https://webi.sh/gh | sh
+~/.local/bin/gh auth login
+~/.local/bin/gh repo list aabiji --limit 4000 | while read -r repo _; do
+    ~/.local/bin/gh repo clone "$repo" "$repo"
 done
 mv ~/dev/archive/aabiji/* ~/dev/archive
-rm -r ~/dev/archive/aabiji
-sudo snap remove gh
+rm -r ~/dev/archive/aabiji ~/.local/bin ~/.local/opt
 
 # Setup journal and dotfiles
 cd ~ && mv dev/archive/journal .
