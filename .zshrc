@@ -11,7 +11,6 @@ alias journal="~/journal/journal.sh"
 export PATH=$PATH:/home/aabiji/.local/bin
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
-. "$HOME/.cargo/env" # Rust cargo
 
 # Prompt with git support
 autoload -Uz vcs_info

@@ -1,9 +1,0 @@
-font-size = 10
-window-width = 90
-window-height = 28
-theme = Ubuntu
-font-family = Fira Code
-keybind = ctrl+shift+l=goto_split:right
-keybind = ctrl+shift+h=goto_split:left
-keybind = f11=toggle_fullscreen
-app-notifications = no-clipboard-copy

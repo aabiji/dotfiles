@@ -1,10 +1,9 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt install curl git python3-pip build-essential p7zip-full gocryptfs zsh vim-gtk3 gnome-tweaks
+sudo apt install curl git python3-pip build-essential p7zip-full gocryptfs zsh tmux vim-gtk3 gnome-tweaks
 sudo snap install code --classic
 sudo snap install obsidian --classic
-sudo snap install ghostty --classic
 sudo snap install spotify brave
 sudo snap remove firefox
 
