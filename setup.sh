@@ -1,17 +1,15 @@
 #!/bin/bash
 
-# Install prerequisites
-sudo apt install curl wget gpg
-
-curl -fsSL https://bun.sh/install | bash # Install bun
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # Install rust
+# Install bun
+sudo apt install curl
+curl -fsSL https://bun.sh/install | bash
 
 sudo apt update
-sudo apt install git python3-pip build-essential p7zip-full gocryptfs zsh golang-go gnome-tweaks vim-gtk3
+sudo apt install git python3-pip build-essential p7zip-full gocryptfs zsh gnome-tweaks vim-gtk3
 sudo snap install code --classic
 sudo snap install obsidian --classic
-snap install ghostty --classic
-sudo snap install spotify docker brave yt-dlp gh
+sudo snap install ghostty --classic
+sudo snap install spotify brave gh
 sudo snap remove firefox
 
 # Clone all repos to the dev/archive folder
@@ -21,8 +19,8 @@ gh repo list aabiji --limit 4000 | while read -r repo _; do
     gh repo clone "$repo" "$repo"
 done
 mv ~/dev/archive/aabiji/* ~/dev/archive
-sudo snap remove gh
 rm -r ~/dev/archive/aabiji
+sudo snap remove gh
 
 # Setup journal and dotfiles
 cd ~ && mv dev/archive/journal .
@@ -55,4 +53,4 @@ traverse ~/dev/dotfiles
 chsh -s /bin/zsh aabiji
 
 # Update
-sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap refresh
+sudo apt update && sudo apt upgrade -y && sudo snap refresh
