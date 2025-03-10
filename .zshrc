@@ -22,7 +22,7 @@ preexec() { unset vcs_info_msg_0_ }
 precmd() { vcs_info }
 
 setopt prompt_subst
-PROMPT='%B%(?.%F{green}→%f.%F{red}→%f) %F{cyan}%1~%f ${vcs_info_msg_0_}%b'
+PROMPT='%B%(?.%F{green}→%f.%F{red}→%f) %F{cyan}%~%f ${vcs_info_msg_0_}%b'
 
 # Setup history
 setopt histignorealldups
