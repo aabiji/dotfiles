@@ -1,0 +1,5 @@
+font-size = 10.5
+window-width = 85
+window-height = 25
+keybind = f11=toggle_fullscreen
+theme = dark:Adwaita Dark,light:Adwaita

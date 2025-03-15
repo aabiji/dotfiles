@@ -1,4 +1,5 @@
 # Aliases and exports
+alias vim="nvim"
 alias rm="rm -rf"
 alias cp="cp -r"
 alias ls="ls -a --color"
@@ -8,6 +9,7 @@ update="sudo apt update && sudo apt upgrade -y && sudo snap refresh"
 alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
 
+export EDITOR="nvim"
 export PATH=$PATH:/home/aabiji/.local/bin
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
