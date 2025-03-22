@@ -19,6 +19,13 @@ vim.opt.number = true
 vim.opt.cmdheight = 0
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.signcolumn = 'no'
+vim.cmd[[
+  " Reset the horizontal scroll when moving up/down lines
+  set nowrap
+  nnoremap <silent> j zHj
+  nnoremap <silent> k zHk
+  set shortmess+=I
+]]
  
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
@@ -27,6 +34,8 @@ vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-m>', ':vsplit<CR>')
 vim.keymap.set('n', '<C-n>', ':split<CR>')
 vim.keymap.set('i', '<C-H>', '<C-W>')
+vim.keymap.set('n', '0', '_')
+vim.keymap.set('n', '_', '0')
 
 require('lazy').setup({
   { -- Indentation
@@ -39,8 +48,7 @@ require('lazy').setup({
       vim.opt.softtabstop = -1
     end
   },
-  -- Syntax highlighting
-  {
+  { -- Syntax highlighting
     "f-person/auto-dark-mode.nvim",
     opts = {
       set_dark_mode = function()
@@ -53,7 +61,7 @@ require('lazy').setup({
       end,
     }
   },
-  {
+  { -- Theme
     'Mofiqul/adwaita.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
@@ -95,6 +103,40 @@ require('lazy').setup({
           vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
         end
       })
+    end
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    config = function()
+      -- Remove colors from the statusline
+      local auto = require("lualine.themes.auto")
+      local modes = {"insert", "normal", "visual", "command", "replace", "inactive", "terminal"}
+      for _, mode in ipairs(modes) do
+        if auto[mode] then
+            auto[mode].a.bg = "NONE"
+	    auto[mode].a.fg = "gray"
+            auto[mode].c.bg = "NONE"
+	    auto[mode].c.fg = "gray"
+	    auto[mode].b.bg = "NONE"
+	    auto[mode].b.fg = "gray"
+        end
+      end
+      require('lualine').setup {
+        options = {
+          theme = auto,
+          icons_enabled = true,
+          component_separators = { left = ' ', right = ' '},
+          section_separators = { left = ' ', right = ' '},
+          globalstatus = true,
+        },
+        sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'branch', 'diff', 'diagnostics'},
+          lualine_c = {'filename'},
+          lualine_x = {''}, lualine_y = {''},
+          lualine_z = {'location'}
+        },
+      }
     end
   }
 })
