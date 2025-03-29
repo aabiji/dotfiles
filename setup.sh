@@ -43,7 +43,7 @@ traverse() {
         fi
     done
 }
-traverse ~/dev/dotfiles
+traverse ~/dev/dotfiles/files
 
 # Switch to zsh
 chsh -s /bin/zsh aabiji
