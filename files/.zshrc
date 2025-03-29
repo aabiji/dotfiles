@@ -1,18 +1,11 @@
 # Aliases and exports
-alias vim="nvim"
 alias rm="rm -rf"
 alias cp="cp -r"
 alias ls="ls -a --color"
-alias activate="source .venv/bin/activate" # activate python virtual environments
-alias push="git add -p && git commit && git push"
-update="sudo apt update && sudo apt upgrade -y && sudo snap refresh"
+update="sudo pacman -Syu"
 alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
-
-export EDITOR="nvim"
-export PATH=$PATH:/home/aabiji/.local/bin
-export BUN_INSTALL="$HOME/.bun"
-export PATH=$BUN_INSTALL/bin:$PATH
+export EDITOR="vim"
 
 # Prompt with git support
 autoload -Uz vcs_info
@@ -32,6 +25,3 @@ setopt sharehistory
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
-
-# bun completions
-[ -s "/home/aabiji/.bun/_bun" ] && source "/home/aabiji/.bun/_bun"

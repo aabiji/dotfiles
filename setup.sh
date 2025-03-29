@@ -1,22 +1,22 @@
 #!/bin/bash
 
-sudo apt update
-sudo apt install curl git python3-pip build-essential p7zip-full gocryptfs zsh tmux vim-gtk3 gnome-tweaks
-sudo snap install obsidian --classic
-sudo snap install ghostty --classic
-sudo snap install nvim --classic
-sudo snap install spotify brave
-sudo snap remove firefox
+sudo pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg -si
+
+# Install packages and remove bloat
+yay -Sy brave-bin spotify ghostty obsidian github-cli 7zip gocryptfs zsh vim ttf-jetbrains-mono ttf-ubuntu-font-family visual-studio-code-bin
+sudo pacman -R gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-connections gnome-console gnome-contacts gnome-logs gnome-maps gnome-tour gnome-usage gnome-user-docs gnome-user-share gnome-weather gnome-music epiphany totem malcontent sushi evince decibels
 
 # Clone all repos to the dev/archive folder
 cd ~ && mkdir -p dev/archive && cd dev/archive
-curl -sS https://webi.sh/gh | sh
-~/.local/bin/gh auth login
-~/.local/bin/gh repo list aabiji --limit 4000 | while read -r repo _; do
-    ~/.local/bin/gh repo clone "$repo" "$repo"
+gh auth login
+gh repo list aabiji --limit 4000 | while read -r repo _; do
+    gh repo clone "$repo" "$repo"
 done
 mv ~/dev/archive/aabiji/* ~/dev/archive
-rm -r ~/dev/archive/aabiji ~/.local/bin ~/.local/opt
+rm -r ~/dev/archive/aabiji yay-bin
 
 # Setup journal and dotfiles
 cd ~ && mv dev/archive/journal .
@@ -25,28 +25,34 @@ mv ~/dev/archive/dotfiles ~/dev/dotfiles
 # Symlink my dotfiles
 traverse() {
     local dir="$1"
-    for entry in "$dir"/.* "$dir"/*; do
-        filename=$(basename "$entry") # Get just the filename
-        if [[
-            "$filename" == "." ||
-            "$filename" == ".." ||
-            "$filename" == *.sh ||
-            "$filename" == .\*  ||
-            "$filename" == ".git" ]]; then
-            continue # Skip unwanted entries
+    local base="$2"
+
+    shopt -s dotglob  # Ensure hidden files are expanded
+    for entry in "$dir"/* "$dir"/.*; do
+        filename=$(basename "$entry")
+
+        # Skip unwanted files and ensure the entry exists
+        if [[ ! -e "$entry" || "$filename" == "." || "$filename" == ".." || "$filename" == *.sh || "$filename" == ".git" ]]; then
+            continue
         fi
 
+        # Compute the relative path for symlink destination
+        relative_path="${entry#$base/}"
+        target="$HOME/$relative_path"
+
         if [[ -d "$entry" ]]; then
-            traverse "$entry"  # Go into the directory
+            mkdir -p "$target"
+            traverse "$entry" "$base"
         else
-            ln -s "$entry" "/home/aabiji/$filename" # Create the symlink
+            ln -sf "$entry" "$target"
         fi
     done
+    shopt -u dotglob  # Reset to default behavior
 }
-traverse ~/dev/dotfiles/files
+traverse "$HOME/dev/dotfiles/files" "$HOME/dev/dotfiles/files"
 
 # Switch to zsh
 chsh -s /bin/zsh aabiji
 
 # Update
-sudo apt update && sudo apt upgrade -y && sudo snap refresh
+sudo pacman -Syu
