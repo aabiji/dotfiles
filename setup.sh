@@ -5,8 +5,13 @@ git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
 makepkg -si
 
-# Install packages and remove bloat
-yay -Sy brave-bin spotify ghostty obsidian github-cli 7zip gocryptfs zsh vim ttf-jetbrains-mono ttf-ubuntu-font-family visual-studio-code-bin
+# Install packages
+yay -Sy brave-bin spotify ghostty obsidian github-cli 7zip gocryptfs zsh nvim ttf-jetbrains-mono ttf-ubuntu-font-family gdb man wl-clipboard
+
+# Install hyprland and friends
+# yay -S hyprland swaybg waybar blueman brightnessctl nautilus
+
+# Or install gnome and remove bloat
 sudo pacman -R gnome-backgrounds gnome-calculator gnome-calendar gnome-characters gnome-connections gnome-console gnome-contacts gnome-logs gnome-maps gnome-tour gnome-usage gnome-user-docs gnome-user-share gnome-weather gnome-music epiphany totem malcontent sushi evince decibels
 
 # Clone all repos to the dev/archive folder

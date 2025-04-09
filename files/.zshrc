@@ -1,11 +1,12 @@
 # Aliases and exports
+alias vim="nvim"
 alias rm="rm -rf"
 alias cp="cp -r"
 alias ls="ls -a --color"
 update="sudo pacman -Syu"
 alias setup="~/journal/open.sh && $update"
 alias journal="~/journal/journal.sh"
-export EDITOR="vim"
+export EDITOR="nvim"
 
 # Prompt with git support
 autoload -Uz vcs_info
