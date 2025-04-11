@@ -6,7 +6,7 @@ cd yay-bin
 makepkg -si
 
 # Install packages
-yay -Sy brave-bin spotify ghostty obsidian github-cli 7zip gocryptfs zsh nvim ttf-jetbrains-mono ttf-ubuntu-font-family gdb man wl-clipboard
+yay -Sy brave-bin spotify ghostty obsidian github-cli 7zip gocryptfs fish ttf-jetbrains-mono ttf-ubuntu-font-family gdb man vim visual-studio-code-bin
 
 # Install hyprland and friends
 # yay -S hyprland swaybg waybar blueman brightnessctl nautilus
@@ -56,8 +56,8 @@ traverse() {
 }
 traverse "$HOME/dev/dotfiles/files" "$HOME/dev/dotfiles/files"
 
-# Switch to zsh
-chsh -s /bin/zsh aabiji
+# Switch to fish 
+chsh -s /bin/fish aabiji
 
 # Update
 sudo pacman -Syu
