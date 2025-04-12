@@ -1,0 +1,8 @@
+font-size = 10.5
+window-width = 80
+window-height = 22
+keybind = f11=toggle_fullscreen
+theme = Dark Pastel
+cursor-style = block
+shell-integration-features = no-cursor
+app-notifications = no-clipboard-copy
