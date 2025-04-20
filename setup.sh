@@ -6,11 +6,13 @@ cd yay-bin
 makepkg -si
 
 # Install stuff
-yay -S sddm-git plasma-desktop dolphin kwalletmanager bluez bluez-utils bluedevil pipewire pipewire-pulse wireplumber pipewire-audio sddm-kcm brave-bin spotify ghostty obsidian github-cli 7zip gocryptfs fish ttf-jetbrains-mono gdb man vim visual-studio-code-bin ninja openssh cmake
+yay -S sddm-git plasma-desktop dolphin kwalletmanager bluez bluez-utils bluedevil pipewire pipewire-pulse wireplumber pipewire-audio sddm-kcm brave-bin spotify konsole obsidian github-cli 7zip gocryptfs fish ttf-jetbrains-mono gdb nvim ninja openssh cmake alsa-utils plasma-pa system-config-printer print-manager samsung-unified-driver-printer wl-clipboard cloc mold spectacle plasma-systemmonitor
 
-# Enable sddm
+# Enable stuff
 systemctl enable sddm.service
 systemctl enable bluetooth.service
+systemctl enable pipewire
+systemctl enable wireplumber
 
 # Clone all repos to the dev/archive folder
 cd ~ && mkdir -p dev/archive && cd dev/archive
