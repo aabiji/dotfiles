@@ -1,0 +1,4 @@
+font-size = 9
+cursor-style = block
+shell-integration-features = no-cursor
+theme = light:Apple System Colors Light,dark:Tango Dark Default
