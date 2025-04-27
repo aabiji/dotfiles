@@ -29,6 +29,7 @@ require("lazy").setup({
 vim.opt.clipboard = "unnamedplus"
 vim.opt.signcolumn = "no"
 vim.opt.swapfile = false
+vim.opt.undofile = false
 vim.opt.cmdheight = 0
 vim.opt.number = true
 vim.opt.splitbelow = true
@@ -76,7 +77,7 @@ vim.keymap.set('n', '<Space>fg', builtin.live_grep)
 vim.keymap.set('n', '<Space>fb', builtin.buffers)
 vim.keymap.set("n", "<Space>fd", vim.diagnostic.setloclist)
 
-vim.keymap.set("i", '<C-Backspace>', '<C-W>')
+vim.keymap.set("i", '<C-h>', '<C-W>')
 vim.keymap.set("n", "0", "_")
 vim.keymap.set("n", "_", "0")
 
@@ -93,10 +94,10 @@ vim.keymap.set("n", 'gi', require('telescope.builtin').lsp_implementations)
 
 vim.keymap.set("n", "<Space>gd", function() -- Git diff
     vim.cmd("G add .")
-    vim.cmd("G diff HEAD")
+    vim.cmd("vertical G diff HEAD")
 end)
 
 vim.keymap.set("n", "<Space>gg", function() -- Git commit
     vim.cmd("G add .")
-    vim.cmd("G commit")
+    vim.cmd("vertical G commit")
 end)
