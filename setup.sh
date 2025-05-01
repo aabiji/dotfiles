@@ -6,7 +6,7 @@ cd yay-bin
 makepkg -si
 
 # Install stuff
-yay -S sddm-git plasma-desktop dolphin kwalletmanager bluez bluez-utils bluedevil pipewire pipewire-pulse wireplumber pipewire-audio sddm-kcm brave-bin spotify ghostty obsidian github-cli 7zip gocryptfs fish gdb nvim tmux ninja openssh cmake alsa-utils plasma-pa system-config-printer print-manager samsung-unified-driver-printer wl-clipboard cloc mold spectacle plasma-systemmonitor
+yay -S sddm-git plasma-desktop dolphin kwalletmanager bluez bluez-utils bluedevil pipewire pipewire-pulse wireplumber pipewire-audio sddm-kcm brave-bin spotify ghostty obsidian github-cli 7zip gocryptfs fish gdb gvim tmux ninja openssh cmake alsa-utils plasma-pa system-config-printer print-manager samsung-unified-driver-printer wl-clipboard cloc mold spectacle plasma-systemmonitor
 
 # Enable stuff
 systemctl enable sddm.service
