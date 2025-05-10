@@ -21,13 +21,10 @@ require("lazy").setup({
     "williamboman/mason.nvim",
     "nvim-telescope/telescope.nvim",
     "saghen/blink.cmp",
-    "f-person/auto-dark-mode.nvim",
     "nvim-lualine/lualine.nvim",
     "nvim-treesitter/nvim-treesitter",
-    "navarasu/onedark.nvim",
-    "mg979/vim-visual-multi",
-    "wakatime/vim-wakatime",
-    --"felipeagc/fleet-theme-nvim",
+    "Mofiqul/dracula.nvim",
+    "wakatime/vim-wakatime"
 })
 
 vim.opt.clipboard = "unnamedplus"
@@ -38,13 +35,14 @@ vim.opt.cmdheight = 0
 vim.opt.number = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+vim.opt.tabstop = 4
+vim.opt.scrolloff = 20
 
 require('nvim-treesitter.configs').setup({
   ensure_installed = {"comment"},
-  auto_install = true,
-  highlight = { enable = true },
+  auto_install = true, highlight = { enable = true },
 })
-
+vim.cmd.colorscheme("dracula")
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -57,15 +55,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 require("mason").setup()
 vim.lsp.enable('clangd')
 vim.lsp.enable('ts_ls')
+vim.lsp.enable('gopls')
 
 require("blink.cmp").setup({
-    completion = { documentation = { auto_show = true } },
-    fuzzy = { implementation = "lua" },
-    keymap = {
-        preset = 'enter',
-        ['<Tab>'] = { 'select_next', 'fallback' },
-        ['<S-Tab>'] = { 'select_prev', 'fallback' },
-    }
+  completion = { documentation = { auto_show = true } },
+  fuzzy = { implementation = "lua" },
+  keymap = {
+    preset = 'enter',
+    ['<Tab>'] = { 'select_next', 'fallback' },
+    ['<S-Tab>'] = { 'select_prev', 'fallback' },
+  }
 })
 
 require("lualine").setup({
@@ -79,17 +78,6 @@ require("lualine").setup({
     lualine_c = {'mode', 'branch', 'diff', 'diagnostics','filename'},
     lualine_x = {'location'}, lualine_y = {}, lualine_z = {},
   },
-})
-
-require("auto-dark-mode").setup({
-   set_dark_mode = function()
-        vim.cmd("set background=dark")
-        vim.cmd.colorscheme("onedark")
-    end,
-    set_light_mode = function()
-        vim.cmd("set background=light")
-        vim.cmd.colorscheme("onedark")
-    end
 })
 
 local builtin = require('telescope.builtin')
@@ -122,3 +110,15 @@ vim.keymap.set("n", "<Space>gg", function() -- Git commit
     vim.cmd("G add .")
     vim.cmd("vertical G commit")
 end)
+
+-- Git push after commit
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "COMMIT_EDITMSG",
+  callback = function() vim.cmd("G push") end
+})
+
+-- Disable mouse when typing
+vim.api.nvim_create_autocmd("InsertEnter", { callback = function() vim.opt.mouse = "" end })
+
+-- Re-enable mouse when leaving Insert mode
+vim.api.nvim_create_autocmd("InsertLeave", { callback = function() vim.opt.mouse = "a" end })
