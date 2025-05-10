@@ -112,9 +112,13 @@ vim.keymap.set("n", "<Space>gg", function() -- Git commit
 end)
 
 -- Git push after commit
-vim.api.nvim_create_autocmd("BufWritePost", {
+vim.api.nvim_create_autocmd("BufWinLeave", {
   pattern = "COMMIT_EDITMSG",
-  callback = function() vim.cmd("G push") end
+  callback = function()
+    vim.defer_fn(function()
+      vim.cmd("G push")
+    end, 1000)
+  end,
 })
 
 -- Disable mouse when typing
