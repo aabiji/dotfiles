@@ -3,4 +3,5 @@ cursor-style = block
 shell-integration-features = no-cursor
 window-width = 96
 window-height = 26
-app-notifications = no-clipboard-copy 
+app-notifications = no-clipboard-copy
+window-decoration = server
