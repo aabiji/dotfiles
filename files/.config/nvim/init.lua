@@ -23,7 +23,7 @@ require("lazy").setup({
     "saghen/blink.cmp",
     "nvim-lualine/lualine.nvim",
     "nvim-treesitter/nvim-treesitter",
-    "Mofiqul/dracula.nvim",
+    "loctvl842/monokai-pro.nvim",
     "wakatime/vim-wakatime"
 })
 
@@ -37,12 +37,14 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.tabstop = 4
 vim.opt.scrolloff = 20
+vim.opt.cursorlineopt = "number"
+vim.opt.cursorline = true
 
 require('nvim-treesitter.configs').setup({
   ensure_installed = {"comment"},
   auto_install = true, highlight = { enable = true },
 })
-vim.cmd.colorscheme("dracula")
+vim.cmd.colorscheme("monokai-pro")
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)

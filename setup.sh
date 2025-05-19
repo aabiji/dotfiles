@@ -6,9 +6,8 @@ cd yay-bin
 makepkg -si
 
 # Install stuff
-yay -S brave-bin spotify ghostty obsidian github-cli unzip 7zip gocryptfs fish gdb tmux ninja openssh cmake alsa-utils plasma-pa system-config-printer print-manager samsung-unified-driver-printer wl-clipboard cloc mold spectacle plasma-systemmonitor neovim
+yay -S brave-bin spotify ghostty obsidian github-cli unzip 7zip gocryptfs fish gdb tmux ninja openssh cmake alsa-utils plasma-pa system-config-printer print-manager samsung-unified-driver-printer xclip cloc mold spectacle plasma-systemmonitor neovim npm curl visual-studio-code-bin
 yay -R yakuake okular kate elisa firefox konsole
-curl -fsSL https://bun.sh/install | bash
 
 # Clone all repos to the dev/archive folder
 cd ~ && mkdir -p dev/archive && cd dev/archive
