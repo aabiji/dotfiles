@@ -15,16 +15,16 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    "tpope/vim-sleuth",
-    "tpope/vim-fugitive",
-    "neovim/nvim-lspconfig",
-    "williamboman/mason.nvim",
-    "nvim-telescope/telescope.nvim",
-    "saghen/blink.cmp",
-    "nvim-lualine/lualine.nvim",
-    "nvim-treesitter/nvim-treesitter",
-    "loctvl842/monokai-pro.nvim",
-    "wakatime/vim-wakatime"
+  "tpope/vim-sleuth",
+  "tpope/vim-fugitive",
+  "neovim/nvim-lspconfig",
+  "williamboman/mason.nvim",
+  "nvim-telescope/telescope.nvim",
+  "saghen/blink.cmp",
+  "nvim-lualine/lualine.nvim",
+  "nvim-treesitter/nvim-treesitter",
+  "wakatime/vim-wakatime",
+  "Mofiqul/dracula.nvim",
 })
 
 vim.opt.clipboard = "unnamedplus"
@@ -44,7 +44,7 @@ require('nvim-treesitter.configs').setup({
   ensure_installed = {"comment"},
   auto_install = true, highlight = { enable = true },
 })
-vim.cmd.colorscheme("monokai-pro")
+vim.cmd.colorscheme("dracula")
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
