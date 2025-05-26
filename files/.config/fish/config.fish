@@ -1,8 +1,5 @@
 set fish_greeting
 
-export EDITOR="nvim"
-
-alias vim="nvim"
 alias gdb="gdb -q"
 alias rm "rm -rf"
 alias cp "cp -r"

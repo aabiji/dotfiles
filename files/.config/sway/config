@@ -125,7 +125,7 @@ bindsym $mod+r mode "resize"
 # Status Bar:
 bar {
     position bottom
-    status_command while ~/.config/sway/status.sh; do sleep 1; done
+    status_command while ~/.config/sway/status.sh; do sleep 0.5; done
     height 16
     font "monospace 8"
     pango_markup enabled
@@ -137,7 +137,7 @@ bar {
 }
 
 bindsym $mod+Shift+q exec poweroff
-bindsym $mod+Return exec ghostty
+bindsym $mod+Return exec alacritty
 bindsym $mod+m exec brave
 bindsym $mod+o exec obsidian
 bindsym $mod+n exec spotify
@@ -154,12 +154,12 @@ input 1739:0:Synaptics_tm2962-001 {
 }
 input "type:keyboard" xkb_options caps:escape
 
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
+bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
+bindsym XF86MonBrightnessUp exec brightnessctl set 1%+
 
 bindgesture swipe:right workspace prev
 bindgesture swipe:left workspace next

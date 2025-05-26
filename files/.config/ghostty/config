@@ -1,9 +1,0 @@
-font-size = 9
-font-family = Inconsolata Regular
-cursor-style = block
-shell-integration-features = no-cursor
-window-width = 88
-window-height = 25
-app-notifications = no-clipboard-copy
-window-decoration = server
-theme = Dracula
