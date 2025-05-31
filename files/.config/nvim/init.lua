@@ -17,39 +17,40 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   "tpope/vim-sleuth",
   "tpope/vim-fugitive",
+
   "neovim/nvim-lspconfig",
   "williamboman/mason.nvim",
-  "nvim-telescope/telescope.nvim",
-  "saghen/blink.cmp",
-  "nvim-lualine/lualine.nvim",
-  "nvim-treesitter/nvim-treesitter",
-  "wakatime/vim-wakatime",
-  "ellisonleao/gruvbox.nvim",
   "stevearc/conform.nvim",
+  { "Fildo7525/pretty_hover", event = "LspAttach", opts = {border=false} },
+  "saghen/blink.cmp",
+
+  "nvim-telescope/telescope.nvim",
+  "lewis6991/gitsigns.nvim",
+  "nvim-lualine/lualine.nvim",
+
+  "ellisonleao/gruvbox.nvim",
+  "nvim-treesitter/nvim-treesitter",
+
+  "wakatime/vim-wakatime",
 })
 
 vim.opt.clipboard = "unnamedplus"
-vim.opt.signcolumn = "no"
 vim.opt.swapfile = false
 vim.opt.undofile = false
 vim.opt.cmdheight = 0
 vim.opt.number = true
 vim.opt.splitbelow = true
+vim.opt.signcolumn = "yes"
 vim.opt.splitright = true
 vim.opt.tabstop = 4
-vim.opt.cursorlineopt = "number"
-vim.opt.cursorline = true
 
 require('nvim-treesitter.configs').setup({
   ensure_installed = {"comment"},
   auto_install = true, highlight = { enable = true },
 })
+require("lualine").setup()
 
-require("gruvbox").setup({
-  terminal_colors = true,
-  bold = false,
-  invert_selection = true,
-})
+require("gruvbox").setup({terminal_colors = true, bold = false, invert_selection = true})
 vim.cmd("colorscheme gruvbox")
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -76,19 +77,6 @@ require("blink.cmp").setup({
   }
 })
 
-require("lualine").setup({
-  options = {
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    globalstatus = true,
-  },
-  sections = {
-    lualine_a = {}, lualine_b = {},
-    lualine_c = {'mode', 'branch', 'diff', 'diagnostics','filename'},
-    lualine_x = {'location'}, lualine_y = {}, lualine_z = {},
-  },
-})
-
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<Space>ff', builtin.find_files)
 vim.keymap.set('n', '<Space>fg', builtin.live_grep)
@@ -106,9 +94,14 @@ vim.keymap.set("n", '<C-h>', '<C-w>h')
 vim.keymap.set("n", '<C-n>', ':split<CR>')
 vim.keymap.set("n", '<C-m>', ':vsplit<CR>')
 
+vim.keymap.set("n", "K", function() require("pretty_hover").hover() end)
+
 vim.keymap.set("n", 'gd', require('telescope.builtin').lsp_definitions)
 vim.keymap.set("n", 'gr', require('telescope.builtin').lsp_references)
 vim.keymap.set("n", 'gi', require('telescope.builtin').lsp_implementations)
+
+require('gitsigns').setup()
+vim.cmd("hi SignColumn guibg=NONE")
 
 vim.keymap.set("n", "<Space>gd", function() -- Git diff
     vim.cmd("G add .")
@@ -145,6 +138,7 @@ require("conform").setup({
   }
 })
 
+-- Autoformat
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = function(args)

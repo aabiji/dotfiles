@@ -6,8 +6,9 @@ cd yay-bin
 makepkg -si
 
 # Install stuff
-yay -S brave-bin spotify ghostty obsidian github-cli unzip 7zip gocryptfs fish gdb tmux ninja openssh cmake alsa-utils plasma-pa system-config-printer print-manager samsung-unified-driver-printer xclip cloc mold spectacle plasma-systemmonitor neovim npm curl visual-studio-code-bin
+yay -S brave-bin obsidian github-cli unzip 7zip gocryptfs fish gdb tmux ninja openssh cmake alsa-utils plasma-pa system-config-printer print-manager samsung-unified-driver-printer xclip cloc mold plasma-systemmonitor neovim npm curl ttf-iosevka alacritty
 yay -R yakuake okular kate elisa firefox konsole
+# yay -S android-studio jdk-openjdk
 
 # Clone all repos to the dev/archive folder
 cd ~ && mkdir -p dev/archive && cd dev/archive
