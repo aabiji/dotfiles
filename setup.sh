@@ -1,43 +1,39 @@
 #!/bin/bash
 
-sudo pacman -S --needed git base-devel
-git clone https://aur.archlinux.org/yay-bin.git
-cd yay-bin
-makepkg -si
+# Update and install base tools
+sudo apt update && sudo apt install -y \
+    git build-essential curl unzip p7zip-full fish gdb tmux ninja-build \
+    openssh-client cmake alsa-utils printer-driver-all xclip neovim npm \
+    cloc libfuse2 software-properties-common gh gocryptfs
 
-# Install stuff
-yay -S brave-bin obsidian github-cli unzip 7zip gocryptfs fish gdb tmux ninja openssh cmake alsa-utils plasma-pa system-config-printer print-manager samsung-unified-driver-printer xclip cloc mold plasma-systemmonitor neovim npm curl ttf-iosevka alacritty
-yay -R yakuake okular kate elisa firefox konsole
-# yay -S android-studio jdk-openjdk
+sudo snap install brave spotify
+sudo snap install obsidian --classic
+sudo snap install code --classic
 
-# Clone all repos to the dev/archive folder
-cd ~ && mkdir -p dev/archive && cd dev/archive
+# Setup GitHub auth and clone repos
+cd ~ && mkdir -p ~/dev/archive && cd ~/dev/archive
 gh auth login
-gh repo list aabiji --limit 4000 | while read -r repo _; do
-    gh repo clone "$repo" "$repo"
-done
-mv ~/dev/archive/aabiji/* ~/dev/archive
-rm -r ~/dev/archive/aabiji yay-bin
+gh repo list aabiji --limit 1000 | awk '{print $1; }' | xargs -L1 gh repo clone
 
-# Setup journal and dotfiles
+mv ~/dev/archive/aabiji/* ~/dev/archive
+rm -r ~/dev/archive/aabiji
+
+ Move journal and dotfiles
 cd ~ && mv dev/archive/journal .
 mv ~/dev/archive/dotfiles ~/dev/dotfiles
 
-# Symlink my dotfiles
+# Symlink dotfiles
 traverse() {
     local dir="$1"
     local base="$2"
 
-    shopt -s dotglob  # Ensure hidden files are expanded
+    shopt -s dotglob
     for entry in "$dir"/* "$dir"/.*; do
         filename=$(basename "$entry")
-
-        # Skip unwanted files and ensure the entry exists
         if [[ ! -e "$entry" || "$filename" == "." || "$filename" == ".." || "$filename" == *.sh || "$filename" == ".git" ]]; then
             continue
         fi
 
-        # Compute the relative path for symlink destination
         relative_path="${entry#$base/}"
         target="$HOME/$relative_path"
 
@@ -48,12 +44,12 @@ traverse() {
             ln -sf "$entry" "$target"
         fi
     done
-    shopt -u dotglob  # Reset to default behavior
+    shopt -u dotglob
 }
 traverse "$HOME/dev/dotfiles/files" "$HOME/dev/dotfiles/files"
 
-# Switch to fish 
-chsh -s /bin/fish aabiji
+# Change default shell to fish
+chsh -s /usr/bin/fish aabiji
 
-# Update
-sudo pacman -Syu
+# Final system update
+sudo apt update && sudo apt upgrade -y
