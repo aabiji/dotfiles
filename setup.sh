@@ -3,8 +3,7 @@
 # Update and install base tools
 sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb tmux ninja-build \
-    openssh-client cmake alsa-utils printer-driver-all xclip neovim npm \
-    cloc libfuse2 software-properties-common gh gocryptfs
+    cmake alsa-utils printer-driver-all wl-clipboard vim-gtk3 npm cloc gh gocryptfs
 
 sudo snap install brave spotify
 sudo snap install obsidian --classic
