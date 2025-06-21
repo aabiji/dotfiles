@@ -3,11 +3,11 @@
 # Update and install base tools
 sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb tmux ninja-build \
-    cmake alsa-utils printer-driver-all wl-clipboard vim-gtk3 npm cloc gh gocryptfs
+    cmake alsa-utils printer-driver-all wl-clipboard npm cloc gh gocryptfs
 
 sudo snap install brave spotify
 sudo snap install obsidian --classic
-sudo snap install code --classic
+sudo snap install nvim --classic
 
 # Setup GitHub auth and clone repos
 cd ~ && mkdir -p ~/dev/archive && cd ~/dev/archive
