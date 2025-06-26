@@ -2,6 +2,7 @@ set fish_greeting
 
 set -gx ANDROID_HOME ~/Android/Sdk
 set -gx PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
+set -gx PATH $PATH ~/zig/
 
 alias vim="nvim"
 alias gdb="gdb -q"

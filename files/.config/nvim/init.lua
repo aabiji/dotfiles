@@ -61,6 +61,8 @@ require("mason").setup()
 vim.lsp.enable('clangd')
 vim.lsp.enable('ts_ls')
 vim.lsp.enable('gopls')
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('zls')
 
 require("blink.cmp").setup({
   completion = { documentation = { auto_show = true } },

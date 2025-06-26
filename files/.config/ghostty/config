@@ -1,0 +1,10 @@
+font-size = 11
+cursor-style = block
+cursor-style-blink = false
+shell-integration = fish
+shell-integration-features = no-cursor
+confirm-close-surface = false
+theme = catppuccin-macchiato
+cursor-color = #ffffff
+app-notifications = no-clipboard-copy
+window-save-state = always
