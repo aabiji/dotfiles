@@ -3,7 +3,7 @@
 # Update and install base tools
 sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb tmux ninja-build \
-    cmake alsa-utils printer-driver-all wl-clipboard npm cloc gh gocryptfs
+    cmake alsa-utils printer-driver-all wl-clipboard npm cloc gh gocryptfs acpi
 
 sudo snap install brave spotify
 sudo snap install obsidian --classic

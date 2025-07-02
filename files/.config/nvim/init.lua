@@ -25,8 +25,22 @@ require("lazy").setup({
   "nvim-telescope/telescope.nvim",
   "lewis6991/gitsigns.nvim",
   "nvim-lualine/lualine.nvim",
-  "catppuccin/nvim",
+  "maxmx03/solarized.nvim",
   "nvim-treesitter/nvim-treesitter",
+  "rebelot/kanagawa.nvim",
+  {
+    "f-person/auto-dark-mode.nvim",
+    opts = {
+      set_dark_mode = function()
+        vim.cmd("set background=dark")
+        vim.cmd.colorscheme("kanagawa")
+      end,
+      set_light_mode = function()
+        vim.cmd("set background=light")
+        vim.cmd.colorscheme("solarized")
+      end,
+    }
+  },
 })
 
 vim.opt.clipboard = "unnamedplus"
@@ -38,9 +52,6 @@ vim.opt.splitbelow = true
 vim.opt.signcolumn = "yes"
 vim.opt.splitright = true
 vim.opt.tabstop = 4
-
-require("catppuccin").setup({ flavour = "macchiato", no_italic = true })
-vim.cmd.colorscheme("catppuccin")
 
 require('nvim-treesitter.configs').setup({
   ensure_installed = {"comment"},
