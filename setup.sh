@@ -5,9 +5,12 @@ sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb tmux ninja-build \
     cmake alsa-utils printer-driver-all wl-clipboard npm cloc gh gocryptfs acpi
 
-sudo snap install brave spotify
+sudo snap install spotify
 sudo snap install obsidian --classic
 sudo snap install nvim --classic
+sudo snap install code --classic
+
+curl -fsS https://dl.brave.com/install.sh | sh
 
 # Setup GitHub auth and clone repos
 cd ~ && mkdir -p ~/dev/archive && cd ~/dev/archive
@@ -51,4 +54,5 @@ traverse "$HOME/dev/dotfiles/files" "$HOME/dev/dotfiles/files"
 chsh -s /usr/bin/fish aabiji
 
 # Final system update
+sudo apt purge gh
 sudo apt update && sudo apt upgrade -y

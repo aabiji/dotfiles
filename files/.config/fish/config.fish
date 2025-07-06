@@ -19,3 +19,6 @@ alias journal "~/journal/journal.sh"
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+# rust
+export RUSTUP_HOME=/home/aabiji/.rustup
