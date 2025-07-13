@@ -25,22 +25,8 @@ require("lazy").setup({
   "nvim-telescope/telescope.nvim",
   "lewis6991/gitsigns.nvim",
   "nvim-lualine/lualine.nvim",
-  "maxmx03/solarized.nvim",
   "nvim-treesitter/nvim-treesitter",
-  "rebelot/kanagawa.nvim",
-  {
-    "f-person/auto-dark-mode.nvim",
-    opts = {
-      set_dark_mode = function()
-        vim.cmd("set background=dark")
-        vim.cmd.colorscheme("kanagawa")
-      end,
-      set_light_mode = function()
-        vim.cmd("set background=light")
-        vim.cmd.colorscheme("solarized")
-      end,
-    }
-  },
+  "loctvl842/monokai-pro.nvim",
 })
 
 vim.opt.clipboard = "unnamedplus"
@@ -53,20 +39,31 @@ vim.opt.signcolumn = "yes"
 vim.opt.splitright = true
 vim.opt.tabstop = 4
 
+local white = "#fdfff1"
+vim.cmd("colorscheme monokai-pro-classic")
+local highlight_groups = {
+"@operator",
+  "@operator.assignment",
+  "@operator.comparison",
+  "@punctuation",
+  "@punctuation.brace",
+  "@punctuation.bracket",
+  "@punctuation.delimiter",
+  "@punctuation.special",
+  "@punctuation.parenthesis",
+  "Operator",
+  "Delimiter",
+  "Special",
+}
+for _, group in ipairs(highlight_groups) do
+  vim.api.nvim_set_hl(0, group, { fg = white })
+end
+
 require('nvim-treesitter.configs').setup({
   ensure_installed = {"comment"},
   auto_install = true, highlight = { enable = true },
 })
 require("lualine").setup()
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client then
-      client.server_capabilities.semanticTokensProvider = nil
-    end
-  end,
-})
 
 require("mason").setup()
 vim.lsp.enable('clangd')
@@ -74,6 +71,7 @@ vim.lsp.enable('ts_ls')
 vim.lsp.enable('gopls')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('zls')
+vim.lsp.enable('pylsp')
 
 require("blink.cmp").setup({
   completion = { documentation = { auto_show = true } },

@@ -22,3 +22,6 @@ set --export PATH $BUN_INSTALL/bin $PATH
 
 # rust
 export RUSTUP_HOME=/home/aabiji/.rustup
+
+# go
+set --export PATH ~/go/bin $PATH

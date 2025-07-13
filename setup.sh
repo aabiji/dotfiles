@@ -10,6 +10,7 @@ sudo snap install obsidian --classic
 sudo snap install nvim --classic
 sudo snap install code --classic
 
+curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -fsS https://dl.brave.com/install.sh | sh
 
 # Setup GitHub auth and clone repos
