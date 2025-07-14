@@ -8,7 +8,6 @@ sudo apt update && sudo apt install -y \
 sudo snap install spotify
 sudo snap install obsidian --classic
 sudo snap install nvim --classic
-sudo snap install code --classic
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -fsS https://dl.brave.com/install.sh | sh

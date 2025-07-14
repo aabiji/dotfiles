@@ -19,8 +19,6 @@ require("lazy").setup({
   "tpope/vim-fugitive",
   "neovim/nvim-lspconfig",
   "williamboman/mason.nvim",
-  "stevearc/conform.nvim",
-  { "Fildo7525/pretty_hover", event = "LspAttach", opts = {border=false} },
   "saghen/blink.cmp",
   "nvim-telescope/telescope.nvim",
   "lewis6991/gitsigns.nvim",
@@ -38,25 +36,17 @@ vim.opt.splitbelow = true
 vim.opt.signcolumn = "yes"
 vim.opt.splitright = true
 vim.opt.tabstop = 4
+vim.opt.undofile = true
 
-local white = "#fdfff1"
 vim.cmd("colorscheme monokai-pro-classic")
 local highlight_groups = {
-"@operator",
-  "@operator.assignment",
-  "@operator.comparison",
-  "@punctuation",
-  "@punctuation.brace",
-  "@punctuation.bracket",
-  "@punctuation.delimiter",
-  "@punctuation.special",
-  "@punctuation.parenthesis",
-  "Operator",
-  "Delimiter",
-  "Special",
+  "@operator", "@operator.assignment", "@operator.comparison",
+  "@punctuation", "@punctuation.brace", "@punctuation.bracket",
+  "@punctuation.delimiter", "@punctuation.special",
+  "@punctuation.parenthesis", "Operator", "Delimiter", "Special",
 }
 for _, group in ipairs(highlight_groups) do
-  vim.api.nvim_set_hl(0, group, { fg = white })
+  vim.api.nvim_set_hl(0, group, { fg = "#fdfff1" })
 end
 
 require('nvim-treesitter.configs').setup({
@@ -64,14 +54,12 @@ require('nvim-treesitter.configs').setup({
   auto_install = true, highlight = { enable = true },
 })
 require("lualine").setup()
-
+require('gitsigns').setup()
 require("mason").setup()
-vim.lsp.enable('clangd')
-vim.lsp.enable('ts_ls')
-vim.lsp.enable('gopls')
-vim.lsp.enable('rust_analyzer')
-vim.lsp.enable('zls')
-vim.lsp.enable('pylsp')
+local servers = { "clangd", "ts_ls", "gopls", "rust_analyzer", "zls", "pylsp" }
+for _, server in ipairs(servers) do
+  vim.lsp.enable(server)
+end
 
 require("blink.cmp").setup({
   completion = { documentation = { auto_show = true } },
@@ -103,14 +91,9 @@ vim.keymap.set("n", '<C-m>', ':vsplit<CR>')
 vim.keymap.set("n", "ge", vim.diagnostic.goto_next, { desc = "Go to next error" })
 vim.keymap.set("n", "gE", vim.diagnostic.goto_prev, { desc = "Go to previous error" })
 
-vim.keymap.set("n", "K", function() require("pretty_hover").hover() end)
-
 vim.keymap.set("n", 'gd', require('telescope.builtin').lsp_definitions)
 vim.keymap.set("n", 'gr', require('telescope.builtin').lsp_references)
 vim.keymap.set("n", 'gi', require('telescope.builtin').lsp_implementations)
-
-require('gitsigns').setup()
-vim.cmd("hi SignColumn guibg=NONE")
 
 vim.keymap.set("n", "<Space>gd", function() -- Git diff
     vim.cmd("G add .")
@@ -122,35 +105,21 @@ vim.keymap.set("n", "<Space>gg", function() -- Git commit
     vim.cmd("vertical G commit")
 end)
 
--- Git push after commit
-vim.api.nvim_create_autocmd("BufWinLeave", {
+vim.api.nvim_create_autocmd("BufWinLeave", { -- Git push after commit
   pattern = "COMMIT_EDITMSG",
   callback = function()
-    vim.defer_fn(function()
-      vim.cmd("G push")
-    end, 1000)
+    vim.defer_fn(function() vim.cmd("G push") end, 1000)
   end,
 })
 
 -- Disable mouse when typing
 vim.api.nvim_create_autocmd("InsertEnter", { callback = function() vim.opt.mouse = "" end })
-
--- Re-enable mouse when leaving Insert mode
 vim.api.nvim_create_autocmd("InsertLeave", { callback = function() vim.opt.mouse = "a" end })
 
--- Autoformat
-require("conform").setup({
-  formatters_by_ft = {
-    go = { "goimports", "gofmt" },
-    rust = { lsp_format = "fallback" },
-    javascript = { "prettierd", "prettier", stop_after_first = true }
-  }
-})
-
--- Autoformat
+-- Format on save
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
-  callback = function(args)
-    require("conform").format({ bufnr = args.buf })
+  callback = function()
+    vim.lsp.buf.format({ async = false })
   end,
 })
