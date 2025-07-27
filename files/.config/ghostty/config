@@ -1,0 +1,8 @@
+font-size = 11.25
+cursor-style = block
+cursor-style-blink = false
+shell-integration = fish
+shell-integration-features = no-cursor
+confirm-close-surface = false
+app-notifications = no-clipboard-copy
+window-save-state = always

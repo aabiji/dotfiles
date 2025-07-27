@@ -3,10 +3,11 @@
 # Update and install base tools
 sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb tmux ninja-build \
-    cmake alsa-utils printer-driver-all npm cloc gh gocryptfs acpi vim-gtk3
+    cmake alsa-utils printer-driver-all npm cloc gh gocryptfs acpi
 
 sudo snap install spotify
 sudo snap install obsidian --classic
+sudo snap install --edge nvim --classic
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -fsS https://dl.brave.com/install.sh | sh
