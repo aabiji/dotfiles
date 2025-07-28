@@ -1,16 +1,12 @@
 vim.opt.undofile = true
 vim.opt.swapfile = false
-
 vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes"
-
 vim.opt.tabstop = 4
 vim.opt.colorcolumn = "80"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-
-vim.g.mapleader = " "
 vim.opt.clipboard = "unnamedplus"
 vim.opt.cmdheight = 0
 
@@ -35,15 +31,11 @@ vim.pack.add({
   "https://github.com/nvim-telescope/telescope.nvim",
   "https://github.com/nvim-lua/plenary.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
-  "https://github.com/catppuccin/nvim",
+  "https://github.com/Mofiqul/dracula.nvim",
 })
 
-require("catppuccin").setup({
-  flavour = "macchiato",
-  transparent_background = true,
-  no_bold = true
-})
-vim.cmd.colorscheme("catppuccin")
+require("dracula").setup({ transparent_bg = true, italic_comment = true })
+vim.cmd.colorscheme("dracula")
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
 
 require("lualine").setup()
@@ -55,27 +47,50 @@ require('nvim-treesitter.configs').setup({
   auto_install = true, highlight = { enable = true },
 })
 
-require("blink.cmp").setup({
+local cmp = require('blink.cmp')
+cmp.setup({
   completion = { documentation = { auto_show = true } },
   fuzzy = { implementation = "lua" },
   keymap = {
     preset = 'enter',
     ['<Tab>'] = { 'select_next', 'fallback' },
     ['<S-Tab>'] = { 'select_prev', 'fallback' },
+    ['<PageUp>'] = {
+      function()
+        for i = 1, 5 do cmp.select_prev() end
+      end,
+    },
+    ['<PageDown>'] = {
+      function()
+        for i = 1, 5 do cmp.select_next() end
+      end,
+    },
   }
 })
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', 'ff', builtin.find_files)
-vim.keymap.set('n', 'fg', builtin.live_grep)
-vim.keymap.set('n', 'fb', builtin.buffers)
+vim.keymap.set('n', '<Space>ff', builtin.find_files)
+vim.keymap.set('n', '<Space>fg', builtin.live_grep)
+vim.keymap.set('n', '<Space>fb', builtin.buffers)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "K",  vim.lsp.buf.hover)
 vim.keymap.set("n", "gr", vim.lsp.buf.references)
 vim.keymap.set("n", "ga", vim.lsp.buf.rename)
 vim.keymap.set("n", "ge", vim.diagnostic.goto_next)
 
+local on_attach = function(client, bufnr)
+  if client.server_capabilities.documentFormattingProvider then
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.format({ async = false })
+      end,
+    })
+  end
+end
+
+local lspconfig = require("lspconfig")
 local servers = { "clangd", "ts_ls", "gopls", "rust_analyzer", "zls", "pylsp" }
 for _, server in ipairs(servers) do
-  vim.lsp.enable(server)
+  lspconfig[server].setup({ on_attach = on_attach })
 end
