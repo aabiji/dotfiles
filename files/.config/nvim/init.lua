@@ -4,7 +4,6 @@ vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.signcolumn = "yes"
 vim.opt.tabstop = 4
-vim.opt.colorcolumn = "80"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.clipboard = "unnamedplus"
@@ -13,7 +12,6 @@ vim.opt.cmdheight = 0
 vim.keymap.set("i", '<C-h>', '<C-W>')
 vim.keymap.set("n", "0", "_")
 vim.keymap.set("n", "_", "0")
-
 vim.keymap.set("n", '<C-l>', '<C-w>l')
 vim.keymap.set("n", '<C-j>', '<C-w>j')
 vim.keymap.set("n", '<C-k>', '<C-w>k')
@@ -31,12 +29,13 @@ vim.pack.add({
   "https://github.com/nvim-telescope/telescope.nvim",
   "https://github.com/nvim-lua/plenary.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
-  "https://github.com/Mofiqul/dracula.nvim",
+  "https://github.com/morhetz/gruvbox",
 })
 
-require("dracula").setup({ transparent_bg = true, italic_comment = true })
-vim.cmd.colorscheme("dracula")
+vim.cmd.colorscheme("gruvbox")
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
 
 require("lualine").setup()
 require('gitsigns').setup()
