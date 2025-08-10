@@ -2,10 +2,10 @@ set fish_greeting
 
 function fish_prompt
     # Current working directory
-    set_color green
-	set -g fish_prompt_pwd_dir_length 0
-	echo -n " "
-	echo -n (prompt_pwd)
+    set_color --bold green
+    set -g fish_prompt_pwd_dir_length 0
+    echo -n " "
+    echo -n (prompt_pwd)
 
     # Git branch, if any
     set_color normal
@@ -15,6 +15,9 @@ function fish_prompt
     end
     echo -n " % "
 end
+
+set -gx ANDROID_SDK_ROOT ~/Android/Sdk
+set -gx PATH $PATH ~/Android/Sdk/cmdline-tools/latest/bin
 
 set -gx ANDROID_HOME ~/Android/Sdk
 set -gx PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
