@@ -33,12 +33,6 @@ require("lazy").setup({
     config = function()
       local lspconfig = require("lspconfig")
 
-      local servers = {
-        c = "clangd", cpp = "clangd", go = "gopls",
-        rust = "rust_analyzer", zig = "zls", python = "pylsp",
-        typescript = "tsserver", javascript = "tsserver"
-      }
-
       local on_attach = function(client, bufnr)
         if client.server_capabilities.documentFormattingProvider then
           vim.api.nvim_create_autocmd("BufWritePre", {
@@ -55,15 +49,10 @@ require("lazy").setup({
         vim.keymap.set("n", "ge", vim.diagnostic.goto_next)
       end
 
-      vim.api.nvim_create_autocmd("FileType", {
-        callback = function(args)
-          local ft = args.match
-          local server = servers[ft]
-          if server and not lspconfig[server].manager then
-            lspconfig[server].setup({ on_attach = on_attach })
-          end
-        end,
-      })
+      local servers = { "clangd", "ts_ls", "gopls", "rust_analyzer", "zls", "pylsp" }
+      for _, server in ipairs(servers) do
+        lspconfig[server].setup({ on_attach = on_attach })
+      end
     end,
   },
   {
