@@ -9,14 +9,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  {
-    "pappasam/papercolor-theme-slim",
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme("PaperColorSlimLight")
-      vim.cmd[[autocmd ColorScheme PaperColorSlim,PaperColorSlimLight highlight Normal guibg=NONE]]
-    end,
-  },
+  { "folke/tokyonight.nvim", config = function() vim.cmd.colorscheme("tokyonight-storm") end },
   {
     "nvim-treesitter/nvim-treesitter",
     config = function()
@@ -27,6 +20,8 @@ require("lazy").setup({
       })
     end,
   },
+  { "RRethy/vim-illuminate", config = function() require('illuminate').configure() end },
+  { "mason-org/mason.nvim", opts = {} },
   {
     "neovim/nvim-lspconfig",
     event = "BufReadPre",
@@ -42,14 +37,25 @@ require("lazy").setup({
             end,
           })
         end
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition)
         vim.keymap.set("n", "K",  vim.lsp.buf.hover)
         vim.keymap.set("n", "gr", vim.lsp.buf.references)
         vim.keymap.set("n", "ga", vim.lsp.buf.rename)
         vim.keymap.set("n", "ge", vim.diagnostic.goto_next)
+
+        vim.keymap.set("n", "gd", function()
+          local params = vim.lsp.util.make_position_params()
+          local res = vim.lsp.buf_request_sync(0, "textDocument/definition", params, 500)
+          for _, r in pairs(res or {}) do
+            if r.result and not vim.tbl_isempty(r.result) then
+              return vim.lsp.util.jump_to_location(r.result[1], "utf-8")
+            end
+          end
+          vim.cmd("normal! /\\<" .. vim.fn.expand("<cword>") .. "\\><CR>")
+        end, { buffer = bufnr })
+
       end
 
-      local servers = { "clangd", "ts_ls", "gopls", "rust_analyzer", "zls", "pylsp" }
+      local servers = { "clangd", "ts_ls", "gopls", "rust_analyzer", "zls", "ruff" }
       for _, server in ipairs(servers) do
         lspconfig[server].setup({ on_attach = on_attach })
       end
@@ -109,7 +115,10 @@ vim.opt.splitright = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.cmdheight = 0
 vim.wo.fillchars = 'eob: '
-vim.cmd[[highlight Normal guibg=NONE]]
+vim.opt.shortmess:append("I")
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = "number"
+
 vim.keymap.set("i", "<C-h>", "<C-W>")
 vim.keymap.set("n", "0", "_")
 vim.keymap.set("n", "_", "0")

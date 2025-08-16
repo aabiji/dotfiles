@@ -3,7 +3,7 @@
 # Update and install base tools
 sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb tmux ninja-build \
-    cmake alsa-utils printer-driver-all npm cloc gh gocryptfs acpi wl-clipboard \
+    cmake alsa-utils printer-driver-all cloc gh gocryptfs acpi wl-clipboard \
     wget gpg apt-transport-https
 
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
@@ -17,6 +17,7 @@ sudo snap install obsidian --classic
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -fsS https://dl.brave.com/install.sh | sh
+curl -fsSL https://bun.sh/install | bash
 
 # Setup GitHub auth and clone repos
 cd ~ && mkdir -p ~/dev/archive && cd ~/dev/archive

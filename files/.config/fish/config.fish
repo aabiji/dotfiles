@@ -16,6 +16,13 @@ function fish_prompt
     echo -n " % "
 end
 
+function setup_system
+    ~/journal/open.sh
+    sudo apt update && sudo apt upgrade && sudo snap refresh
+    ~/dev/dotfiles/cleanup.sh
+    obsidian
+end
+
 set -gx ANDROID_SDK_ROOT ~/Android/Sdk
 set -gx PATH $PATH ~/Android/Sdk/cmdline-tools/latest/bin
 
@@ -29,7 +36,7 @@ alias gdb="gdb -q"
 alias rm "rm -rf"
 alias cp "cp -r"
 alias ls "ls -a --color"
-alias setup "~/journal/open.sh && sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo snap refresh"
+alias setup="setup_system"
 alias journal "~/journal/journal.sh"
 alias setup_emsdk ". /home/aabiji/emsdk/emsdk_env.fish"
 
