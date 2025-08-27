@@ -18,10 +18,11 @@ end
 
 function setup_system
     ~/journal/open.sh
+    nohup obsidian > /dev/null 2>&1 &
     sudo apt update && sudo apt upgrade && sudo snap refresh
     ~/dev/dotfiles/cleanup.sh
-    obsidian
 end
+
 
 set -gx ANDROID_SDK_ROOT ~/Android/Sdk
 set -gx PATH $PATH ~/Android/Sdk/cmdline-tools/latest/bin
