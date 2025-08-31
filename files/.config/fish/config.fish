@@ -50,3 +50,6 @@ export RUSTUP_HOME=/home/aabiji/.rustup
 
 # go
 set --export PATH ~/go/bin $PATH
+
+# gradle
+set --export PATH /opt/gradle/gradle-9.0.0/bin $PATH
