@@ -9,7 +9,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  { "folke/tokyonight.nvim", config = function() vim.cmd.colorscheme("tokyonight-storm") end },
+  { "folke/tokyonight.nvim" },
+  { "tpope/vim-sleuth" },
+  { "lewis6991/gitsigns.nvim", config = true },
+  { "mason-org/mason.nvim", opts = {} },
   {
     "nvim-treesitter/nvim-treesitter",
     config = function()
@@ -20,8 +23,6 @@ require("lazy").setup({
       })
     end,
   },
-  { "RRethy/vim-illuminate", config = function() require('illuminate').configure() end },
-  { "mason-org/mason.nvim", opts = {} },
   {
     "neovim/nvim-lspconfig",
     event = "BufReadPre",
@@ -105,10 +106,9 @@ require("lazy").setup({
       })
     end,
   },
-  { "lewis6991/gitsigns.nvim", config = true },
-  { "tpope/vim-sleuth" },
 })
 
+vim.opt.tabstop = 4
 vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.number = true
@@ -129,3 +129,6 @@ vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-n>", ":split<CR>")
 vim.keymap.set("n", "<C-m>", ":vsplit<CR>")
 vim.keymap.set("i", "<C-Backspace>", "<C-W>")
+vim.cmd("colo tokyonight-night")
+vim.api.nvim_set_hl(0, "StatusLine", { reverse = false })
+vim.api.nvim_set_hl(0, "StatusLineNC", { reverse = false })

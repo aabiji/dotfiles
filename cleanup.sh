@@ -16,4 +16,4 @@ sudo systemd-tmpfiles --clean
 sudo journalctl --vacuum-size=50M
 
 # Remove docker container
-sudo docker system prune
+#sudo docker system prune
