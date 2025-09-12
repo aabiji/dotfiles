@@ -9,8 +9,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  { "folke/tokyonight.nvim" },
   { "tpope/vim-sleuth" },
+  { "edeneast/nightfox.nvim" },
   { "lewis6991/gitsigns.nvim", config = true },
   { "mason-org/mason.nvim", opts = {} },
   {
@@ -119,6 +119,7 @@ vim.opt.shortmess:append("I")
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 vim.opt.clipboard = "unnamedplus"
+vim.cmd[[let g:clipboard='xclip']]
 vim.keymap.set("i", "<C-h>", "<C-W>")
 vim.keymap.set("n", "0", "_")
 vim.keymap.set("n", "_", "0")
@@ -129,6 +130,4 @@ vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-n>", ":split<CR>")
 vim.keymap.set("n", "<C-m>", ":vsplit<CR>")
 vim.keymap.set("i", "<C-Backspace>", "<C-W>")
-vim.cmd("colo tokyonight-night")
-vim.api.nvim_set_hl(0, "StatusLine", { reverse = false })
-vim.api.nvim_set_hl(0, "StatusLineNC", { reverse = false })
+vim.cmd[[colo carbonfox]]

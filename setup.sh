@@ -3,12 +3,14 @@
 # Update and install base tools
 sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb ninja-build \
-    cmake alsa-utils printer-driver-all cloc gh gocryptfs acpi wl-clipboard \
-    wget gpg apt-transport-https ghostty
+    cmake alsa-utils printer-driver-all cloc gh gocryptfs acpi \
+    wget gpg apt-transport-https golang-go ripgrep xclip
 
 sudo snap install --edge nvim --classic
 sudo snap install obsidian --classic
+sudo snap install spotify
 
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 curl -fsS https://dl.brave.com/install.sh | sh
 curl -fsSL https://bun.sh/install | bash
 
