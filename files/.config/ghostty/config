@@ -17,3 +17,5 @@ keybind = ctrl+space>n=next_tab
 keybind = ctrl+space>t=toggle_tab_overview
 
 gtk-tabs-location=hidden
+background-blur = true
+background-opacity = 0.6

@@ -4,7 +4,7 @@
 sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb ninja-build \
     cmake alsa-utils printer-driver-all cloc gh gocryptfs acpi \
-    wget gpg apt-transport-https golang-go ripgrep xclip
+    wget gpg apt-transport-https golang-go ripgrep wl-clipboard snapd
 
 sudo snap install --edge nvim --classic
 sudo snap install obsidian --classic

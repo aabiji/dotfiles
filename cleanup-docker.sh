@@ -20,4 +20,4 @@ docker volume rm $(docker volume ls -q) 2>/dev/null
 echo "Removing all user-defined networks..."
 docker network rm $(docker network ls -q | grep -v "bridge\|host\|none") 2>/dev/null
 
-echo "Docker reset complete!"
+echo "Done!"

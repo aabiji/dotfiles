@@ -10,7 +10,20 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   { "tpope/vim-sleuth" },
-  { "edeneast/nightfox.nvim" },
+  {
+    "navarasu/onedark.nvim",
+    config = function()
+      require("onedark").setup({ style = "darker", transparent = true, })
+      require("onedark").load()
+    end,
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("lualine").setup()
+    end,
+  },
   { "lewis6991/gitsigns.nvim", config = true },
   { "mason-org/mason.nvim", opts = {} },
   {
@@ -119,7 +132,6 @@ vim.opt.shortmess:append("I")
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
 vim.opt.clipboard = "unnamedplus"
-vim.cmd[[let g:clipboard='xclip']]
 vim.keymap.set("i", "<C-h>", "<C-W>")
 vim.keymap.set("n", "0", "_")
 vim.keymap.set("n", "_", "0")
@@ -130,4 +142,3 @@ vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-n>", ":split<CR>")
 vim.keymap.set("n", "<C-m>", ":vsplit<CR>")
 vim.keymap.set("i", "<C-Backspace>", "<C-W>")
-vim.cmd[[colo carbonfox]]
