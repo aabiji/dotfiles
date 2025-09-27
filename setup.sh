@@ -8,6 +8,7 @@ sudo apt update && sudo apt install -y \
 
 sudo snap install --edge nvim --classic
 sudo snap install obsidian --classic
+sudo snap install code --classic
 sudo snap install spotify
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
