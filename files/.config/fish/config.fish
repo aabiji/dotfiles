@@ -18,21 +18,18 @@ end
 
 function setup_system
     ~/journal/open.sh
-    nohup obsidian > /dev/null 2>&1 &
+    nohup obsidian > /dev/null 2>&1 & disown
     sudo apt update -y && sudo apt upgrade -y && sudo snap refresh
     ~/dev/dotfiles/cleanup.sh
 end
-
 
 set -gx ANDROID_SDK_ROOT ~/Android/Sdk
 set -gx PATH $PATH ~/Android/Sdk/cmdline-tools/latest/bin
 
 set -gx ANDROID_HOME ~/Android/Sdk
 set -gx PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
-set -gx PATH $PATH ~/zig/
-set -gx EDITOR "nvim"
+set -gx EDITOR "vim"
 
-alias vim="nvim"
 alias gdb="gdb -q"
 alias rm "rm -rf"
 alias cp "cp -r"
@@ -47,9 +44,3 @@ set --export PATH $BUN_INSTALL/bin $PATH
 
 # rust
 export RUSTUP_HOME=/home/aabiji/.rustup
-
-# go
-set --export PATH ~/go/bin $PATH
-
-# gradle
-set --export PATH /opt/gradle/gradle-9.0.0/bin $PATH

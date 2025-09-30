@@ -1,18 +1,18 @@
 #!/bin/bash
+curl -fsS https://dl.brave.com/install.sh | sh
 
 # Update and install base tools
 sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb ninja-build \
     cmake alsa-utils printer-driver-all cloc gh gocryptfs acpi \
-    wget gpg apt-transport-https golang-go ripgrep wl-clipboard snapd
+    wget gpg apt-transport-https snapd vim-gtk3 npm
 
-sudo snap install --edge nvim --classic
 sudo snap install obsidian --classic
 sudo snap install code --classic
+sudo snap install ghostty --classic
+sudo snap install go --classic
 sudo snap install spotify
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
-curl -fsS https://dl.brave.com/install.sh | sh
 curl -fsSL https://bun.sh/install | bash
 
 # Setup GitHub auth and clone repos
