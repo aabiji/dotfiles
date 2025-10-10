@@ -16,27 +16,19 @@ function fish_prompt
     echo -n " % "
 end
 
-function setup_system
-    ~/journal/open.sh
-    nohup obsidian > /dev/null 2>&1 & disown
-    sudo apt update -y && sudo apt upgrade -y && sudo snap refresh
-    ~/dev/dotfiles/cleanup.sh
-end
-
 set -gx ANDROID_SDK_ROOT ~/Android/Sdk
 set -gx PATH $PATH ~/Android/Sdk/cmdline-tools/latest/bin
 
 set -gx ANDROID_HOME ~/Android/Sdk
 set -gx PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
-set -gx EDITOR "vim"
+set -gx EDITOR "nvim"
 
+alias vim="nvim"
 alias gdb="gdb -q"
 alias rm "rm -rf"
 alias cp "cp -r"
 alias ls "ls -a --color"
-alias setup="setup_system"
 alias journal "~/journal/journal.sh"
-alias setup_emsdk ". /home/aabiji/emsdk/emsdk_env.fish"
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"

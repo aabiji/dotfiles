@@ -5,14 +5,20 @@ curl -fsS https://dl.brave.com/install.sh | sh
 sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb ninja-build \
     cmake alsa-utils printer-driver-all cloc gh gocryptfs acpi \
-    wget gpg apt-transport-https snapd vim-gtk3 npm
+    wget gpg apt-transport-https snapd npm wl-clipboard ripgrep
+
+curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
+sudo apt update && sudo apt install wezterm-nightly
 
 sudo snap install obsidian --classic
 sudo snap install code --classic
-sudo snap install ghostty --classic
+sudo snap install nvim --classic
 sudo snap install go --classic
 sudo snap install spotify
 
+curl -fsS https://dl.brave.com/install.sh | sh
 curl -fsSL https://bun.sh/install | bash
 
 # Setup GitHub auth and clone repos
