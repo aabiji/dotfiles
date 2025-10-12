@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 config.font_size = 10.5
 config.enable_tab_bar = false
-config.color_scheme = 'iTerm2 Default'
+config.color_scheme = 'GruvboxDark'
 config.initial_rows = 32
 config.initial_cols = 104
 

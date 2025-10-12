@@ -13,7 +13,6 @@ sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
 sudo apt update && sudo apt install wezterm-nightly
 
 sudo snap install obsidian --classic
-sudo snap install code --classic
 sudo snap install nvim --classic
 sudo snap install go --classic
 sudo snap install spotify

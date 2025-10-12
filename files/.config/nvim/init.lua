@@ -2,21 +2,23 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.opt.signcolumn = "yes"
 vim.opt.number = true
-vim.opt.relativenumber = false
 vim.opt.mouse = 'a'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = false
 vim.opt.wrap = false
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
-vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to left split' })
-vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to below split' })
-vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to above split' })
-vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to right split' })
+vim.opt.cmdheight = 0
+vim.keymap.set('n', '<C-h>', '<C-w>h')
+vim.keymap.set('n', '<C-j>', '<C-w>j')
+vim.keymap.set('n', '<C-k>', '<C-w>k')
+vim.keymap.set('n', '<C-l>', '<C-w>l')
+vim.keymap.set('n', '<C-m>', ':vsplit<CR>')
+vim.keymap.set('n', '<C-n>', ':split<CR>')
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -48,9 +50,9 @@ require("lazy").setup({
       })
       
       local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
-      vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Live grep' })
-      vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
+      vim.keymap.set('n', '<leader>ff', builtin.find_files)
+      vim.keymap.set('n', '<leader>fg', builtin.live_grep)
+      vim.keymap.set('n', '<leader>fb', builtin.buffers)
     end,
   },
 
@@ -62,17 +64,12 @@ require("lazy").setup({
     },
     config = function()
       require('mason').setup()
-      require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'pyright', 'ts_ls', 'rust_analyzer' },
-        automatic_installation = true,
-      })
+      require('mason-lspconfig').setup({ automatic_installation = true })
 
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local servers = { 'lua_ls', 'pyright', 'ts_ls', 'rust_analyzer' }
+      local servers = { 'clangd', 'pyright', 'ts_ls', 'rust_analyzer', 'gopls' }
       for _, lsp in ipairs(servers) do
-        vim.lsp.config[lsp] = {
-          capabilities = capabilities,
-        }
+        vim.lsp.config[lsp] = { capabilities = capabilities }
       end
 
       for _, lsp in ipairs(servers) do
@@ -155,9 +152,29 @@ require("lazy").setup({
   },
 
   {
-    'folke/tokyonight.nvim',
+    'morhetz/gruvbox',
     config = function()
-      vim.cmd.colorscheme('tokyonight-night')
+      vim.cmd [[
+        colorscheme gruvbox
+        set fillchars=eob:\ 
+        set shortmess+=I
+        highlight CursorLine guibg=NONE ctermbg=NONE
+        highlight CursorLineNr guifg=#ffffff guibg=#3a3a3a gui=bold
+        highlight SignColumn guibg=NONE ctermbg=NONE
+        highlight LineNr guibg=NONE ctermbg=NONE
+        highlight VertSplit guibg=NONE ctermbg=NONE
+        highlight EndOfBuffer guibg=NONE ctermbg=NONE
+        highlight TabLineFill guibg=NONE ctermbg=NONE
+        highlight Normal guibg=NONE ctermbg=NONE
+        highlight NormalNC guibg=NONE ctermbg=NONE
+      ]]
+    end,
+  },
+
+  {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup({})
     end,
   },
 
