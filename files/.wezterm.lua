@@ -3,8 +3,9 @@ local config = wezterm.config_builder()
 config.font_size = 10.5
 config.enable_tab_bar = false
 config.color_scheme = 'GruvboxDark'
-config.initial_rows = 32
-config.initial_cols = 104
+config.initial_rows = 31
+config.initial_cols = 106
+config.enable_wayland = false
 
 config.leader = { key = 'Space', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.keys = {

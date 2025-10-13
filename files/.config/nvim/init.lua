@@ -13,6 +13,7 @@ vim.opt.expandtab = true
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.cmdheight = 0
+vim.keymap.set('n', '0', '_')
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')
@@ -43,9 +44,7 @@ require("lazy").setup({
         defaults = {
           border = false,
           layout_strategy = 'bottom_pane',
-          layout_config = {
-            height = 25,
-          },
+          layout_config = { height = 25 },
         },
       })
       
@@ -83,8 +82,7 @@ require("lazy").setup({
           vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
           vim.keymap.set('n', 'ge', vim.diagnostic.goto_next, opts)
-          vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-          vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+          vim.keymap.set('n', 'ga', vim.lsp.buf.rename, opts)
         end,
       })
     end,
@@ -110,8 +108,8 @@ require("lazy").setup({
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<PageUp>'] = cmp.mapping.scroll_docs(-4),
+          ['<PageDown>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
           ['<Tab>'] = cmp.mapping(function(fallback)

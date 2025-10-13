@@ -1,5 +1,4 @@
 #!/bin/bash
-curl -fsS https://dl.brave.com/install.sh | sh
 
 # Update and install base tools
 sudo apt update && sudo apt install -y \
