@@ -1,0 +1,14 @@
+font-size = 10.5
+window-height = 31
+window-width = 106
+theme = Gruvbox Dark
+window-show-tab-bar = never
+keybind = ctrl+space>c=new_tab
+keybind = ctrl+space>shift+%=new_split:right
+keybind = ctrl+space>shift+"=new_split:down
+keybind = ctrl+space>p=previous_tab
+keybind = ctrl+space>n=next_tab
+keybind = ctrl+space>h=goto_split:left
+keybind = ctrl+space>j=goto_split:bottom
+keybind = ctrl+space>k=goto_split:top
+keybind = ctrl+space>l=goto_split:right
