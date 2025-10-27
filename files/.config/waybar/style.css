@@ -1,0 +1,50 @@
+window#waybar {
+    background: #000000;
+    color: #ffffff;
+    font-family: "Inter Nerd Font", "Inter", sans-serif;
+    font-size: 14px;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    color: #ddd;
+    background: transparent;
+    border: none;
+    margin: 0 2px;
+    font-size: 14px;
+}
+
+#workspaces button.active {
+    background: #1a1a1a;
+    color: #00ff00;
+}
+
+#workspaces button:hover {
+    background: #222;
+}
+
+#window {
+    padding: 0 8px;
+    color: #fff;
+}
+
+#pulseaudio,
+#bluetooth,
+#clock,
+#backlight,
+#battery,
+#custom-power {
+    padding: 0 8px;
+    color: #fff;
+    font-size: 14px;
+}
+
+#custom-power {
+    font-size: 16px;
+}
+
+#custom-power:hover,
+#bluetooth:hover,
+#clock:hover {
+    background: #1a1a1a;
+}

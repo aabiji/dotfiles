@@ -1,23 +1,29 @@
 #!/bin/bash
+sudo add-apt-repository universe -y
+sudo add-apt-repository ppa:agornostal/ulauncher -y
 
 # Update and install base tools
 sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb ninja-build \
     cmake alsa-utils printer-driver-all cloc gh gocryptfs acpi \
-    wget gpg apt-transport-https snapd npm wl-clipboard ripgrep
-
-curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
-echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
-sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
-sudo apt update && sudo apt install wezterm-nightly
+    wget gpg apt-transport-https snapd npm \
+    ulauncher brightnessctl pamixer blueman hyprland wl-clipboard ripgrep swaybg gammastep
 
 sudo snap install obsidian --classic
 sudo snap install nvim --classic
+sudo snap install ghostty --classic
 sudo snap install go --classic
 sudo snap install spotify
 
 curl -fsS https://dl.brave.com/install.sh | sh
 curl -fsSL https://bun.sh/install | bash
+curl -f https://zed.dev/install.sh | sh
+
+# Install inter nerd font
+wget "https://github.com/ayusshrathore/inter-nerd-font/raw/main/Inter%20Regular%20Nerd%20Font%20Complete.otf" -O /tmp/inter-nerd.otf
+mkdir -p ~/.local/share/fonts
+mv /tmp/inter-nerd.otf ~/.local/share/fonts/
+fc-cache -fv
 
 # Setup GitHub auth and clone repos
 cd ~ && mkdir -p ~/dev/archive && cd ~/dev/archive

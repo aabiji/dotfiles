@@ -13,6 +13,7 @@ vim.opt.expandtab = true
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.cmdheight = 0
+vim.opt.fillchars = { eob = " " }
 vim.keymap.set('n', '0', '_')
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
@@ -20,6 +21,7 @@ vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', '<C-m>', ':vsplit<CR>')
 vim.keymap.set('n', '<C-n>', ':split<CR>')
+vim.keymap.set('i', '<C-Backspace>', '<C-w>')
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -150,23 +152,26 @@ require("lazy").setup({
   },
 
   {
-    'morhetz/gruvbox',
+    'loctvl842/monokai-pro.nvim',
     config = function()
+      require("monokai-pro").setup()
       vim.cmd [[
-        colorscheme gruvbox
-        set fillchars=eob:\ 
-        set shortmess+=I
-        highlight CursorLine guibg=NONE ctermbg=NONE
-        highlight CursorLineNr guifg=#ffffff guibg=#3a3a3a gui=bold
-        highlight SignColumn guibg=NONE ctermbg=NONE
-        highlight LineNr guibg=NONE ctermbg=NONE
-        highlight VertSplit guibg=NONE ctermbg=NONE
-        highlight EndOfBuffer guibg=NONE ctermbg=NONE
-        highlight TabLineFill guibg=NONE ctermbg=NONE
-        highlight Normal guibg=NONE ctermbg=NONE
-        highlight NormalNC guibg=NONE ctermbg=NONE
+        set cursorline
+        set cursorlineopt=number
+        colorscheme monokai-pro-classic
       ]]
+      vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = "#727072" })
+      vim.api.nvim_set_hl(0, "@punctuation.delimiter", { fg = "#727072" })
+      vim.api.nvim_set_hl(0, "Operator", { fg = "#727072" })
     end,
+  },
+
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('lualine').setup()
+    end
   },
 
   {
