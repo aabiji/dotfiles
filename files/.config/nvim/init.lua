@@ -68,7 +68,7 @@ require("lazy").setup({
       require('mason-lspconfig').setup({ automatic_installation = true })
 
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local servers = { 'clangd', 'pyright', 'ts_ls', 'rust_analyzer', 'gopls' }
+      local servers = { 'clangd', 'pyright', 'ts_ls', 'rust_analyzer', 'gopls', 'zls' }
       for _, lsp in ipairs(servers) do
         vim.lsp.config[lsp] = { capabilities = capabilities }
       end
