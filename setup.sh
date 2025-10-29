@@ -7,7 +7,8 @@ sudo apt update && sudo apt install -y \
     git build-essential curl unzip p7zip-full fish gdb ninja-build \
     cmake alsa-utils printer-driver-all cloc gh gocryptfs acpi \
     wget gpg apt-transport-https snapd npm \
-    ulauncher brightnessctl pamixer blueman hyprland wl-clipboard ripgrep swaybg gammastep
+    ulauncher brightnessctl pamixer blueman hyprland wl-clipboard \
+    ripgrep swaybg gammastep network-manager-gnome yaru-theme-gtk yaru-theme-icon libglib2.0-bin
 
 sudo snap install obsidian --classic
 sudo snap install nvim --classic

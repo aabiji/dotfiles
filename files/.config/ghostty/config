@@ -1,5 +1,5 @@
-font-size = 10.5
-theme = Builtin Tango Dark
+font-size = 11
+theme = Monokai Classic
 window-height = 31
 window-width = 106
 window-show-tab-bar = never

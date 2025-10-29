@@ -15,7 +15,6 @@ window#waybar {
 }
 
 #workspaces button.active {
-    background: #1a1a1a;
     color: #00ff00;
 }
 
@@ -33,6 +32,7 @@ window#waybar {
 #clock,
 #backlight,
 #battery,
+#custom-theme,
 #custom-power {
     padding: 0 8px;
     color: #fff;
@@ -47,4 +47,16 @@ window#waybar {
 #bluetooth:hover,
 #clock:hover {
     background: #1a1a1a;
+}
+
+#battery.warning {
+    color: #ff9900;
+}
+
+#battery.critical {
+    color: #ff0000;
+}
+
+#custom-theme {
+    font-size: 16px;
 }
