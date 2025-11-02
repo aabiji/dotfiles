@@ -1,5 +1,7 @@
 font-size = 11
-theme = Monokai Classic
+cursor-style = block
+shell-integration-features = no-cursor
+theme = iTerm2 Tango Dark
 window-height = 31
 window-width = 106
 window-show-tab-bar = never

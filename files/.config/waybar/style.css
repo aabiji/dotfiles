@@ -1,5 +1,5 @@
 window#waybar {
-    background: #000000;
+    background-color: rgba(30, 30, 30, 0.8);
     color: #ffffff;
     font-family: "Inter Nerd Font", "Inter", sans-serif;
     font-size: 14px;
@@ -20,6 +20,7 @@ window#waybar {
 
 #workspaces button:hover {
     background: #222;
+    border: none;
 }
 
 #window {
@@ -30,6 +31,7 @@ window#waybar {
 #pulseaudio,
 #bluetooth,
 #clock,
+#tray,
 #backlight,
 #battery,
 #custom-theme,

@@ -152,21 +152,6 @@ require("lazy").setup({
   },
 
   {
-    'loctvl842/monokai-pro.nvim',
-    config = function()
-      require("monokai-pro").setup()
-      vim.cmd [[
-        set cursorline
-        set cursorlineopt=number
-        colorscheme monokai-pro-classic
-      ]]
-      vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = "#727072" })
-      vim.api.nvim_set_hl(0, "@punctuation.delimiter", { fg = "#727072" })
-      vim.api.nvim_set_hl(0, "Operator", { fg = "#727072" })
-    end,
-  },
-
-  {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()

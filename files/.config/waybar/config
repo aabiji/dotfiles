@@ -5,7 +5,7 @@
     "spacing": 4,
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": [],
-    "modules-right": ["network", "custom/theme", "bluetooth", "battery", "backlight", "pulseaudio", "clock", "custom/power"],
+    "modules-right": ["tray", "custom/theme", "bluetooth", "battery", "backlight", "pulseaudio", "clock", "custom/power"],
     "hyprland/workspaces": {
         "format": "{id}",
         "on-click": "activate",
@@ -40,16 +40,6 @@
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "on-click": "blueman-manager"
-    },
-    "network": {
-        "format-wifi": "{icon} {essid} ({signalStrength}%)",
-        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-        "format-ethernet": "{ifname}",
-        "format-disconnected": "Disconnected",
-        "tooltip-format-wifi": "{essid} ({signalStrength}%) {frequency} GHz",
-        "tooltip-format-ethernet": "{ifname} {ipaddr}",
-        "on-click": "nm-connection-editor",
-        "interval": 7
     },
     "battery": {
         "format": "{icon} {capacity}%",
@@ -86,5 +76,9 @@
         "on-click": "~/.config/waybar/scripts/theme-toggle.sh",
         "interval": 3,
         "tooltip": false
-    }
+    },
+    "tray": {
+        "icon-size": 18,
+        "spacing": 8
+    },
 }
