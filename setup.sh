@@ -5,21 +5,24 @@ set -e
 sudo pacman -Syu --noconfirm
 
 # Install base development tools
-sudo pacman -S --noconfirm --needed \
+sudo pacman -S --noconfirm --needed gnome gdm gdm-settings \
     base-devel git curl wget unzip p7zip fish gdb ninja cmake \
-    alsa-utils cups cloc acpi ripgrep zig go nodejs npm \
-    hyprland waybar brightnessctl pamixer blueman \
-    wl-clipboard cliphist swaybg gammastep ghostty neovim \
-    xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
-    qt5-wayland qt6-wayland network-manager-applet \
-    polkit polkit-gnome swaync \
-    flameshot baobab thunar \
-    gvfs gvfs-mtp gvfs-gphoto2 \
-    pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber \
-    gnome-themes-extra kvantum nwg-look github-cli hypridle \
-    pavucontrol sof-firmware alsa-ucm-conf \
-    wayland xorg-xwayland sddm xf86-input-libinput \
-    ttf-jetbrains-mono ttf-font-awesome ttf-dejavu ttf-liberation noto-fonts
+    alsa-utils cups cloc acpi ripgrep nodejs wl-clipboard ghostty neovim \
+    qt5-wayland qt6-wayland gvfs gvfs-mtp gvfs-gphoto2 \
+    pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber github-cli gnome-tweaks \
+    pavucontrol sof-firmware alsa-ucm-conf wayland xorg-xwayland \
+    noto-fonts yaru-gtk-theme yaru-icon-theme ttf-ubuntu-font-family
+
+yay -R gnome-boxes gnome-builder \
+    gnome-calendar gnome-contacts gnome-maps gnome-music \
+    gnome-chess gnome-weather gnome-logs gnome-clocks gnome-software \
+    gnome-calculator gnome-calls gnome-characters \
+    gnome-connections gnome-console gnome-disk-utility gnome-font-viewer \
+    gnome-mahjongg gnome-mines gnome-nibbles gnome-remote-desktop gnome-robots \
+    gnome-sound-recorder gnome-sudoku gnome-system-monitor gnome-text-editor \
+    gnome-themes-extra gnome-tour d-spy lightsoff quadrapassel swell-foop ghex \
+    thunar flameshot file-roller epiphany malcontent ulauncher kvantum \
+    simple-scan dconf-editor decibels showtime
 
 wget "https://github.com/ayusshrathore/inter-nerd-font/raw/main/Inter%20Regular%20Nerd%20Font%20Complete.otf" -O /tmp/inter-nerd.otf
 mkdir -p ~/.local/share/fonts
@@ -35,7 +38,7 @@ if ! command -v yay &> /dev/null; then
     cd ~
 fi
 
-yay -S --noconfirm --needed brave-bin spotify obsidian hyprlock docker ulauncher
+yay -S --noconfirm --needed brave-bin spotify obsidian docker docker-compose
 
 # Install bun
 curl -fsSL https://bun.sh/install | bash
@@ -87,16 +90,11 @@ fi
 # Change default shell to fish
 chsh -s /usr/bin/fish
 
-# Enable and start bluetooth service
+# Enable services
 sudo systemctl enable bluetooth.service
-sudo systemctl start bluetooth.service
-
-# Enable and start cups (printing) service
 sudo systemctl enable cups.service
-sudo systemctl start cups.service
-
-# enable sddm
-sudo systemctl enable sddm
+sudo systemctl enable docker.service
+sudo systemctl enable gdm.service
 
 # Set up GTK3 theme
 mkdir -p ~/.config/gtk-3.0

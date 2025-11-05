@@ -1,9 +1,9 @@
-font-size = 11
+font-size = 10
 cursor-style = block
 shell-integration-features = no-cursor
 theme = iTerm2 Tango Dark
-window-height = 31
-window-width = 106
+window-height = 32
+window-width = 110
 window-show-tab-bar = never
 keybind = ctrl+space>c=new_tab
 keybind = ctrl+space>shift+%=new_split:right
