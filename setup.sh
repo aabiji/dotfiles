@@ -8,7 +8,7 @@ sudo pacman -Syu --noconfirm
 sudo pacman -S --noconfirm --needed gnome gdm gdm-settings \
     base-devel git curl wget unzip p7zip fish gdb ninja cmake \
     alsa-utils cups cloc acpi ripgrep nodejs wl-clipboard ghostty neovim \
-    qt5-wayland qt6-wayland gvfs gvfs-mtp gvfs-gphoto2 \
+    qt5-wayland qt6-wayland baobab gvfs gvfs-mtp gvfs-gphoto2 \
     pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber github-cli gnome-tweaks \
     pavucontrol sof-firmware alsa-ucm-conf wayland xorg-xwayland \
     noto-fonts yaru-gtk-theme yaru-icon-theme ttf-ubuntu-font-family
