@@ -5,40 +5,33 @@ set -e
 sudo pacman -Syu --noconfirm
 
 # Install base development tools
-sudo pacman -S --noconfirm --needed gnome gdm gdm-settings \
+sudo pacman -S --noconfirm --needed gnome gdm \
     base-devel git curl wget unzip p7zip fish gdb ninja cmake \
     alsa-utils cups cloc acpi ripgrep nodejs wl-clipboard ghostty neovim \
     qt5-wayland qt6-wayland baobab gvfs gvfs-mtp gvfs-gphoto2 \
     pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber github-cli gnome-tweaks \
-    pavucontrol sof-firmware alsa-ucm-conf wayland xorg-xwayland \
-    noto-fonts yaru-gtk-theme yaru-icon-theme ttf-ubuntu-font-family
+    pavucontrol sof-firmware alsa-ucm-conf wayland xorg-xwayland visual-studio-code-bin
 
-yay -R gnome-boxes gnome-builder \
-    gnome-calendar gnome-contacts gnome-maps gnome-music \
-    gnome-chess gnome-weather gnome-logs gnome-clocks gnome-software \
-    gnome-calculator gnome-calls gnome-characters \
+yay -R gnome-calendar gnome-contacts gnome-maps gnome-music \
+    gnome-weather gnome-logs gnome-clocks gnome-software \
+    gnome-calculator gnome-characters \
     gnome-connections gnome-console gnome-disk-utility gnome-font-viewer \
-    gnome-mahjongg gnome-mines gnome-nibbles gnome-remote-desktop gnome-robots \
-    gnome-sound-recorder gnome-sudoku gnome-system-monitor gnome-text-editor \
-    gnome-themes-extra gnome-tour d-spy lightsoff quadrapassel swell-foop ghex \
-    thunar flameshot file-roller epiphany malcontent ulauncher kvantum \
-    simple-scan dconf-editor decibels showtime
+    gnome-remote-desktop gnome-system-monitor gnome-text-editor \
+    gnome-themes-extra gnome-tour \
+    epiphany malcontent simple-scan decibels showtime
 
 wget "https://github.com/ayusshrathore/inter-nerd-font/raw/main/Inter%20Regular%20Nerd%20Font%20Complete.otf" -O /tmp/inter-nerd.otf
 mkdir -p ~/.local/share/fonts
 mv /tmp/inter-nerd.otf ~/.local/share/fonts/
 fc-cache -fv
 
-# Install yay (AUR helper) if not already installed
-if ! command -v yay &> /dev/null; then
-    cd /tmp
-    git clone https://aur.archlinux.org/yay.git
-    cd yay
-    makepkg -si --noconfirm
-    cd ~
-fi
+cd /tmp
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si --noconfirm
+cd ~
 
-yay -S --noconfirm --needed brave-bin spotify obsidian docker docker-compose
+yay -S --noconfirm --needed brave-bin spotify obsidian noto-fonts gdm-settings
 
 # Install bun
 curl -fsSL https://bun.sh/install | bash
@@ -93,21 +86,4 @@ chsh -s /usr/bin/fish
 # Enable services
 sudo systemctl enable bluetooth.service
 sudo systemctl enable cups.service
-sudo systemctl enable docker.service
 sudo systemctl enable gdm.service
-
-# Set up GTK3 theme
-mkdir -p ~/.config/gtk-3.0
-cat > ~/.config/gtk-3.0/settings.ini << 'EOF'
-[Settings]
-gtk-theme-name=Yaru-dark
-gtk-icon-theme-name=Yaru
-gtk-font-name=Sans 10
-gtk-cursor-theme-name=Yaru
-EOF
-
-# Set up GTK2 theme
-cat > ~/.gtkrc-2.0 << 'EOF'
-gtk-theme-name="Yaru-dark"
-gtk-icon-theme-name="Yaru"
-EOF
