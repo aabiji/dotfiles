@@ -217,10 +217,10 @@ require("lazy").setup({
     config = function()
       vim.cmd[[colo gruvbox]]
       vim.opt.cursorline = true
-      vim.api.nvim_set_hl(0, "Normal", { bg = "#10151a" })
       vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "Normal", { bg = "#10151a" })
     end,
   },
 })

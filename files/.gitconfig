@@ -3,3 +3,5 @@
 	name = Abigail Adegbiji
 [init]
 	defaultBranch = main
+[diff]
+    external = difft
