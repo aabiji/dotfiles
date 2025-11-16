@@ -33,6 +33,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
+-- markdown wrapping
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    vim.opt_local.breakindent = true
+  end,
+})
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -119,6 +129,18 @@ require("lazy").setup({
       for _, lsp in ipairs(servers) do
         vim.lsp.enable(lsp)
       end
+
+      -- Auto-format on save
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            buffer = args.buf,
+            callback = function()
+              vim.lsp.buf.format({ async = false })
+            end,
+          })
+        end,
+      })
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
@@ -263,6 +285,7 @@ require("lazy").setup({
           mode = "tabs",
           show_buffer_close_icons = false,
           show_tab_indicators = false,
+          show_buffer_icons = false,
         }
       })
     end,

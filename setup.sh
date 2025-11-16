@@ -31,7 +31,7 @@ cd yay
 makepkg -si --noconfirm
 cd ~
 
-yay -S --noconfirm --needed brave-bin spotify obsidian noto-fonts gdm-settings
+yay -S --noconfirm --needed brave-bin spotify noto-fonts gdm-settings
 
 # Install bun
 curl -fsSL https://bun.sh/install | bash

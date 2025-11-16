@@ -9,23 +9,21 @@ function fish_prompt
 
     # Git branch, if any
     set_color normal
-    set branch (git symbolic-ref --short HEAD 2> /dev/null)   
+    set branch (git symbolic-ref --short HEAD 2> /dev/null)
     if test "$branch" != "" -a "$branch" != "HEAD"
         echo -n " ($branch)"
     end
     echo -n " % "
 end
 
-# Update packages and snaps
-function update
-  sudo apt update -y
-  sudo apt upgrade -y
-  sudo snap refresh
-  sudo apt autoremove -y
-  LANG=C snap list --all | awk '/disabled/{print $1, $3}' | while read -l snapname revision
-      sudo snap remove "$snapname" --revision="$revision"
-  end
+# open journal entry for the current date
+function log
+    set today (date "+%Y/%B-%d") # Get today's date
+    set filepath "/home/$USER/journal/output/$today.md"
+    mkdir -p (dirname $filepath)
+    nvim $filepath
 end
+
 
 # Mkdir and cd in one command
 function mkcd

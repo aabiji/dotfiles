@@ -1,7 +1,6 @@
 font-size = 10
 cursor-style = block
 shell-integration-features = no-cursor
-theme = iTerm2 Tango Dark
 window-height = 34
 window-width = 110
 window-show-tab-bar = never
