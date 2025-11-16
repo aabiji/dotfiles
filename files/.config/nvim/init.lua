@@ -21,7 +21,7 @@ vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', '<C-m>', ':vsplit<CR>')
 vim.keymap.set('n', '<C-n>', ':split<CR>')
-vim.keymap.set('i', '<S-Backspace>', '<C-w>')
+vim.keymap.set('i', '<C-Backspace>', '<C-w>')
 vim.keymap.set('n', '<PageUp>', ':tabprev<CR>')
 vim.keymap.set('n', '<PageDown>', ':tabnext<CR>')
 
@@ -56,6 +56,28 @@ require("lazy").setup({
       local builtin = require('telescope.builtin')
       local actions = require('telescope.actions')
 
+      -- If we're in a split, open the selected file in the split
+      -- If we're in an empty buffer, replace the buffer with the selected file
+      -- Else, open the file in a new tab
+      local function smart_open(prompt_bufnr)
+        local entry = require('telescope.actions.state').get_selected_entry()
+        actions.close(prompt_bufnr)
+
+        local buf = vim.api.nvim_get_current_buf()
+        local win = vim.api.nvim_get_current_win()
+        local buf_name = vim.api.nvim_buf_get_name(buf)
+        local is_empty = buf_name == "" and vim.api.nvim_buf_get_changedtick(buf) == 2
+        local win_count = #vim.api.nvim_tabpage_list_wins(0)
+
+        if is_empty then
+          vim.cmd('edit ' .. entry.path)
+        elseif win_count > 1 then
+          vim.cmd('edit ' .. entry.path)
+        else
+          vim.cmd('tabedit ' .. entry.path)
+        end
+      end
+
       telescope.setup({
         defaults = {
           border = false,
@@ -65,8 +87,8 @@ require("lazy").setup({
         pickers = {
           find_files = {
             mappings = {
-              n = { ["<CR>"] = actions.select_tab },
-              i = { ["<CR>"] = actions.select_tab },
+              n = { ["<CR>"] = smart_open },
+              i = { ["<CR>"] = smart_open },
             },
           },
         }
@@ -101,12 +123,46 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
           local opts = { buffer = args.buf }
-          vim.keymap.set("n", "gd", "<cmd>tab split | lua vim.lsp.buf.definition()<CR>", {})
-          vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+
+          -- Smart go to definition that reuses existing tabs
+          vim.keymap.set("n", "gd", function()
+            -- Get the definition location
+            local params = vim.lsp.util.make_position_params()
+            vim.lsp.buf_request(0, 'textDocument/definition', params, function(err, result, ctx, config)
+              if err or not result or vim.tbl_isempty(result) then
+                return
+              end
+
+              -- Handle single or multiple results
+              local location = result[1] or result
+              local target_uri = location.uri or location.targetUri
+              local target_path = vim.uri_to_fname(target_uri)
+
+              -- Check if file is already open in a tab
+              for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
+                local win = vim.api.nvim_tabpage_get_win(tabpage)
+                local buf = vim.api.nvim_win_get_buf(win)
+                local buf_name = vim.api.nvim_buf_get_name(buf)
+
+                if buf_name == target_path then
+                  -- Switch to the existing tab
+                  vim.api.nvim_set_current_tabpage(tabpage)
+                  -- Jump to the position
+                  vim.lsp.util.jump_to_location(location, 'utf-8')
+                  return
+                end
+              end
+
+              -- File not open in any tab, open in new tab
+              vim.cmd('tab split')
+              vim.lsp.util.jump_to_location(location, 'utf-8')
+            end)
+          end, opts)
+
+          vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, opts)
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
           vim.keymap.set('n', 'ge', vim.diagnostic.goto_next, opts)
           vim.keymap.set('n', 'ga', vim.lsp.buf.rename, opts)
-
         end,
       })
     end,
@@ -215,12 +271,15 @@ require("lazy").setup({
   {
     'morhetz/gruvbox',
     config = function()
-      vim.cmd[[colo gruvbox]]
+      vim.cmd[[
+        let g:gruvbox_contrast_dark='hard'
+        let g:gruvbox_contrast_light='hard'
+        colorscheme gruvbox
+        ]]
       vim.opt.cursorline = true
       vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "NONE" })
-      vim.api.nvim_set_hl(0, "Normal", { bg = "#10151a" })
     end,
-  },
+  }
 })
