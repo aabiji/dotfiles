@@ -10,7 +10,7 @@ sudo pacman -S --noconfirm --needed gnome gdm \
     alsa-utils cups cloc acpi ripgrep nodejs wl-clipboard ghostty neovim \
     qt5-wayland qt6-wayland baobab gvfs gvfs-mtp gvfs-gphoto2 \
     pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber github-cli gnome-tweaks \
-    pavucontrol sof-firmware alsa-ucm-conf wayland xorg-xwayland visual-studio-code-bin
+    pavucontrol sof-firmware alsa-ucm-conf wayland xorg-xwayland gnome-system-monitor visual-studio-code-bin
 
 yay -R gnome-calendar gnome-contacts gnome-maps gnome-music \
     gnome-weather gnome-logs gnome-clocks gnome-software \

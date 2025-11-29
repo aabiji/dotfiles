@@ -96,6 +96,7 @@ require("lazy").setup({
         },
         pickers = {
           find_files = {
+            find_command={'rg','--files','--sortr','path'},
             mappings = {
               n = { ["<CR>"] = smart_open },
               i = { ["<CR>"] = smart_open },
@@ -131,16 +132,16 @@ require("lazy").setup({
       end
 
       -- Auto-format on save
-      vim.api.nvim_create_autocmd('LspAttach', {
-        callback = function(args)
-          vim.api.nvim_create_autocmd('BufWritePre', {
-            buffer = args.buf,
-            callback = function()
-              vim.lsp.buf.format({ async = false })
-            end,
-          })
-        end,
-      })
+      --vim.api.nvim_create_autocmd('LspAttach', {
+      --  callback = function(args)
+      --    vim.api.nvim_create_autocmd('BufWritePre', {
+      --      buffer = args.buf,
+      --      callback = function()
+      --        vim.lsp.buf.format({ async = false })
+      --      end,
+      --    })
+      --  end,
+      --})
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
@@ -247,6 +248,7 @@ require("lazy").setup({
         auth_install = true,
         highlight = { enable = true },
         indent = { enable = true },
+        ensure_installed = { "comment" },
       })
     end,
   },

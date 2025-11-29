@@ -30,11 +30,16 @@ function mkcd
     mkdir -p $argv[1] && cd $argv[1]
 end
 
+# android studio
 set -gx ANDROID_SDK_ROOT ~/Android/Sdk
 set -gx PATH $PATH ~/Android/Sdk/cmdline-tools/latest/bin
 
 set -gx ANDROID_HOME ~/Android/Sdk
 set -gx PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
+
+# flutter
+set -gx PATH $PATH ~/flutter/flutter/bin
+
 set -gx EDITOR "nvim"
 
 alias vim="nvim"
@@ -47,9 +52,3 @@ alias journal "~/journal/journal.sh"
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
-
-# zed cli
-set --export PATH ~/.local/bin $PATH
-
-# rust
-export RUSTUP_HOME=/home/aabiji/.rustup
