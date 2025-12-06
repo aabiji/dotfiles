@@ -1,45 +1,16 @@
 #!/bin/bash
-set -e
 
-# Update system
-sudo pacman -Syu --noconfirm
+# https://github.com/devangshekhawat/Fedora-43-Post-Install-Guide
+sudo dnf install @development-tools
+sudo dnf install -y git curl wget p7zip p7zip-plugins fish ninja-build cmake ripgrep nodejs wl-clipboard ghostty neovim gh difftastic
+curl -fsS https://dl.brave.com/install.sh | sh
+sudo flatpak install flathub com.spotify.Client
+flatpak install flathub md.obsidian.Obsidian
 
-# Install base development tools
-sudo pacman -S --noconfirm --needed gnome gdm \
-    base-devel git curl wget unzip p7zip fish gdb ninja cmake \
-    alsa-utils cups cloc acpi ripgrep nodejs wl-clipboard ghostty neovim \
-    qt5-wayland qt6-wayland baobab gvfs gvfs-mtp gvfs-gphoto2 \
-    pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber github-cli gnome-tweaks \
-    pavucontrol sof-firmware alsa-ucm-conf wayland xorg-xwayland gnome-system-monitor
-
-yay -R gnome-calendar gnome-contacts gnome-maps gnome-music \
-    gnome-weather gnome-logs gnome-clocks gnome-software \
-    gnome-calculator gnome-characters \
-    gnome-connections gnome-console gnome-disk-utility gnome-font-viewer \
-    gnome-remote-desktop gnome-system-monitor gnome-text-editor \
-    gnome-themes-extra gnome-tour \
-    epiphany malcontent simple-scan decibels showtime
-
-wget "https://github.com/ayusshrathore/inter-nerd-font/raw/main/Inter%20Regular%20Nerd%20Font%20Complete.otf" -O /tmp/inter-nerd.otf
-mkdir -p ~/.local/share/fonts
-mv /tmp/inter-nerd.otf ~/.local/share/fonts/
-fc-cache -fv
-
-cd /tmp
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si --noconfirm
-cd ~
-
-yay -S --noconfirm --needed brave-bin spotify noto-fonts gdm-settings difftastic
-
-# Install bun
-curl -fsSL https://bun.sh/install | bash
-
-# Setup directories
-mkdir -p ~/dev/archive ~/Pictures
+sudo dnf remove akregator elisa-player firefox   kleopatra   kmail   kontact   konsole   korganizer   kolourpaint   kcharselect   kmahjongg   kmines   kmouth   kpat   ktnef   kaddressbook   kamoso   skanpage   qrca   pim-data-exporter   neochat   "libreoffice*"   plasma-welcome   plasma-discover dragon
 
 # Setup GitHub auth and clone repos
+mkdir -p dev/archive
 cd ~/dev/archive
 gh auth login
 gh repo list aabiji --limit 1000 | awk '{print $1; }' | xargs -L1 gh repo clone
@@ -82,8 +53,3 @@ fi
 
 # Change default shell to fish
 chsh -s /usr/bin/fish
-
-# Enable services
-sudo systemctl enable bluetooth.service
-sudo systemctl enable cups.service
-sudo systemctl enable gdm.service

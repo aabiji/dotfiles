@@ -1,9 +1,8 @@
 font-size = 10
 cursor-style = block
 shell-integration-features = no-cursor
-theme = Gruvbox Dark
-window-height = 34
-window-width = 110
+window-height = 33
+window-width = 114
 window-show-tab-bar = never
 keybind = ctrl+space>c=new_tab
 keybind = ctrl+space>shift+%=new_split:right
