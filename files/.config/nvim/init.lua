@@ -132,16 +132,16 @@ require("lazy").setup({
       end
 
       -- Auto-format on save
-      --vim.api.nvim_create_autocmd('LspAttach', {
-      --  callback = function(args)
-      --    vim.api.nvim_create_autocmd('BufWritePre', {
-      --      buffer = args.buf,
-      --      callback = function()
-      --        vim.lsp.buf.format({ async = false })
-      --      end,
-      --    })
-      --  end,
-      --})
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            buffer = args.buf,
+            callback = function()
+              vim.lsp.buf.format({ async = false })
+            end,
+          })
+        end,
+      })
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
@@ -248,7 +248,7 @@ require("lazy").setup({
         auth_install = true,
         highlight = { enable = true },
         indent = { enable = true },
-        ensure_installed = { "comment" },
+        ensure_installed = { "comment", "tsx" },
       })
     end,
   },
@@ -294,17 +294,28 @@ require("lazy").setup({
   },
 
   {
-    'morhetz/gruvbox',
+    'ellisonleao/gruvbox.nvim',
     config = function()
-      vim.cmd[[
-        let g:gruvbox_contrast_dark='hard'
-        let g:gruvbox_contrast_light='hard'
-        colorscheme gruvbox
-        ]]
-      vim.opt.cursorline = true
-      vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
-      vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
-      vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "NONE" })
+      require("gruvbox").setup({
+        italic = {
+          strings = false,
+          emphasis = false,
+          comments = false,
+          operators = false,
+          folds = false,
+        },
+      })
+
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        callback = function()
+          -- make signcolumn use the same background as Normal
+          local normal_bg = vim.api.nvim_get_hl(0, { name = "Normal" }).bg
+          vim.api.nvim_set_hl(0, "SignColumn", { bg = normal_bg })
+        end,
+      })
+      vim.cmd("doautocmd ColorScheme")
+
+      vim.cmd[[colo gruvbox]]
     end,
-  }
+  },
 })

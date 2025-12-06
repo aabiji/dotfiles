@@ -10,7 +10,7 @@ sudo pacman -S --noconfirm --needed gnome gdm \
     alsa-utils cups cloc acpi ripgrep nodejs wl-clipboard ghostty neovim \
     qt5-wayland qt6-wayland baobab gvfs gvfs-mtp gvfs-gphoto2 \
     pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber github-cli gnome-tweaks \
-    pavucontrol sof-firmware alsa-ucm-conf wayland xorg-xwayland gnome-system-monitor visual-studio-code-bin
+    pavucontrol sof-firmware alsa-ucm-conf wayland xorg-xwayland gnome-system-monitor
 
 yay -R gnome-calendar gnome-contacts gnome-maps gnome-music \
     gnome-weather gnome-logs gnome-clocks gnome-software \
@@ -31,7 +31,7 @@ cd yay
 makepkg -si --noconfirm
 cd ~
 
-yay -S --noconfirm --needed brave-bin spotify noto-fonts gdm-settings
+yay -S --noconfirm --needed brave-bin spotify noto-fonts gdm-settings difftastic
 
 # Install bun
 curl -fsSL https://bun.sh/install | bash
