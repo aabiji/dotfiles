@@ -14,6 +14,15 @@ vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.cmdheight = 0
 vim.opt.fillchars = { eob = " " }
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.colorcolumn = "80"
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = "number"
+vim.opt.shortmess:append("I")
 vim.keymap.set('n', '0', '_')
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
@@ -145,6 +154,9 @@ require("lazy").setup({
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          client.server_capabilities.semanticTokensProvider = nil
+
           local opts = { buffer = args.buf }
 
           -- Smart go to definition that reuses existing tabs
@@ -257,7 +269,12 @@ require("lazy").setup({
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      require('lualine').setup()
+      require('lualine').setup({
+        sections = {
+          lualine_a = {'mode'}, lualine_b = {'branch', 'diff', 'diagnostics'},
+          lualine_c = {'filename'}, lualine_x = {}, lualine_y = {}, lualine_z = {'location'}
+        },
+      })
     end
   },
 
@@ -288,34 +305,14 @@ require("lazy").setup({
           show_buffer_close_icons = false,
           show_tab_indicators = false,
           show_buffer_icons = false,
+          always_show_bufferline = false
         }
       })
     end,
   },
 
   {
-    'ellisonleao/gruvbox.nvim',
-    config = function()
-      require("gruvbox").setup({
-        italic = {
-          strings = false,
-          emphasis = false,
-          comments = false,
-          operators = false,
-          folds = false,
-        },
-      })
-
-      vim.api.nvim_create_autocmd("ColorScheme", {
-        callback = function()
-          -- make signcolumn use the same background as Normal
-          local normal_bg = vim.api.nvim_get_hl(0, { name = "Normal" }).bg
-          vim.api.nvim_set_hl(0, "SignColumn", { bg = normal_bg })
-        end,
-      })
-      vim.cmd("doautocmd ColorScheme")
-
-      vim.cmd[[colo gruvbox]]
-    end,
+    "chriskempson/base16-vim",
+    config = function() vim.cmd[[colo base16-decaf]] end
   },
 })

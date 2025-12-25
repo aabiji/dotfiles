@@ -1,19 +1,30 @@
 set fish_greeting
 
 function fish_prompt
-    # Current working directory
-    set_color --bold green
-    set -g fish_prompt_pwd_dir_length 0
-    echo -n " "
-    echo -n (prompt_pwd)
-
-    # Git branch, if any
+    # Git branch (keeping your current logic)
     set_color normal
     set branch (git symbolic-ref --short HEAD 2> /dev/null)
-    if test "$branch" != "" -a "$branch" != "HEAD"
-        echo -n " ($branch)"
+    if test "$branch" != ""
+        echo -n "($branch) "
     end
-    echo -n " % "
+
+    # User @ Hostname in Bash-style colors
+    set_color green
+    echo -n (whoami)
+    echo -n "@"
+    echo -n (prompt_hostname)
+
+    # The colon and directory
+    set_color normal
+    echo -n ":"
+
+    set_color green
+    echo -n (prompt_pwd)
+
+    # The prompt symbol ($ for user, # for root)
+    set_color white
+    echo -n "\$ "
+    set_color normal
 end
 
 # open journal entry for the current date
