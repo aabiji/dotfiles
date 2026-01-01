@@ -255,12 +255,13 @@ require("lazy").setup({
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
+    branch = 'master',
     config = function()
       require('nvim-treesitter.configs').setup({
-        auth_install = true,
+        auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
-        ensure_installed = { "comment", "tsx" },
+        ensure_installed = { "comment", "tsx", "markdown" },
       })
     end,
   },
@@ -268,6 +269,7 @@ require("lazy").setup({
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
+    branch = 'master',
     config = function()
       require('lualine').setup({
         sections = {

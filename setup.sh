@@ -1,13 +1,20 @@
 #!/bin/bash
 
-# https://github.com/devangshekhawat/Fedora-43-Post-Install-Guide
-sudo dnf install @development-tools
-sudo dnf install -y git curl wget p7zip p7zip-plugins fish ninja-build cmake ripgrep nodejs wl-clipboard ghostty neovim gh difftastic
-curl -fsS https://dl.brave.com/install.sh | sh
-sudo flatpak install flathub com.spotify.Client
-flatpak install flathub md.obsidian.Obsidian
+sudo apt install -y git curl wget p7zip fish ninja-build cmake ripgrep nodejs wl-clipboard gh build-essential
 
-sudo dnf remove akregator elisa-player firefox   kleopatra   kmail   kontact   konsole   korganizer   kolourpaint   kcharselect   kmahjongg   kmines   kmouth   kpat   ktnef   kaddressbook   kamoso   skanpage   qrca   pim-data-exporter   neochat   "libreoffice*"   plasma-welcome   plasma-discover dragon
+# brave
+curl -fsS https://dl.brave.com/install.sh | sh
+
+sudo snap install obsidian --classic
+sudo snap install spotify
+
+# neovim
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt-get update
+sudo apt-get install neovim
+
+# ghostty
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 
 # Setup GitHub auth and clone repos
 mkdir -p dev/archive
