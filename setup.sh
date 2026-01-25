@@ -1,20 +1,18 @@
 #!/bin/bash
 
-sudo apt install -y git curl wget p7zip fish ninja-build cmake ripgrep nodejs wl-clipboard gh build-essential
+sudo dnf install -y git curl wget p7zip fish neovim ninja-build cmake ripgrep nodejs wl-clipboard gh gcc-c++ make
 
-# brave
+sudo dnf install -y flatpak
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub com.spotify.Client
+flatpak install flathub md.obsidian.Obsidian
+
 curl -fsS https://dl.brave.com/install.sh | sh
 
-sudo snap install obsidian --classic
-sudo snap install spotify
+sudo dnf copr enable scottames/ghostty
+sudo dnf install ghostty -y
 
-# neovim
-sudo add-apt-repository ppa:neovim-ppa/unstable
-sudo apt-get update
-sudo apt-get install neovim
-
-# ghostty
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+sudo dnf rmeove firefox
 
 # Setup GitHub auth and clone repos
 mkdir -p dev/archive

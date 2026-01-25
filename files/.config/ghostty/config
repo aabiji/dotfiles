@@ -14,5 +14,43 @@ keybind = ctrl+space>j=goto_split:bottom
 keybind = ctrl+space>k=goto_split:top
 keybind = ctrl+space>l=goto_split:right
 clipboard-paste-protection = false
-theme = Niji
-cursor-color = #FFFFFF
+background-opacity = 0.9
+
+# iTerm2 Default colors
+background = 000000
+foreground = ffffff
+cursor-color = c7c7c7
+selection-background = 5f87af
+selection-foreground = ffffff
+
+# Black
+palette = 0=#000000
+palette = 8=#666666
+
+# Red
+palette = 1=#c91b00
+palette = 9=#ff6e67
+
+# Green
+palette = 2=#00c200
+palette = 10=#5ffa68
+
+# Yellow
+palette = 3=#c7c400
+palette = 11=#fffc67
+
+# Blue
+palette = 4=#6699ff
+palette = 12=#6fc1ff
+
+# Magenta
+palette = 5=#c930c7
+palette = 13=#ff77ff
+
+# Cyan
+palette = 6=#00c5c7
+palette = 14=#60fdff
+
+# White
+palette = 7=#c7c7c7
+palette = 15=#ffffff

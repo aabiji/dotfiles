@@ -5,17 +5,11 @@ vim.opt.number = true
 vim.opt.mouse = 'a'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.hlsearch = false
 vim.opt.wrap = false
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.cmdheight = 0
-vim.opt.fillchars = { eob = " " }
 vim.opt.undofile = true
-vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
@@ -34,7 +28,6 @@ vim.keymap.set('i', '<C-Backspace>', '<C-w>')
 vim.keymap.set('n', '<PageUp>', ':tabprev<CR>')
 vim.keymap.set('n', '<PageDown>', ':tabnext<CR>')
 
--- remove trailing space on exit
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = vim.api.nvim_create_augroup("RemoveTrailingWhitespace", { clear = true }),
   callback = function()
@@ -42,25 +35,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
--- markdown wrapping
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.linebreak = true
-    vim.opt_local.breakindent = true
-  end,
-})
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
+    "git", "clone", "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
+    "--branch=stable", lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
@@ -68,132 +48,85 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   {
     'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
+    cmd = 'Telescope',
+    keys = {
+      { '<leader>ff', '<cmd>Telescope find_files<cr>' },
+      { '<leader>fg', '<cmd>Telescope live_grep<cr>' },
+    },
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
-      local telescope = require('telescope')
-      local builtin = require('telescope.builtin')
-      local actions = require('telescope.actions')
-
-      -- If we're in a split, open the selected file in the split
-      -- If we're in an empty buffer, replace the buffer with the selected file
-      -- Else, open the file in a new tab
-      local function smart_open(prompt_bufnr)
-        local entry = require('telescope.actions.state').get_selected_entry()
-        actions.close(prompt_bufnr)
-
-        local buf = vim.api.nvim_get_current_buf()
-        local win = vim.api.nvim_get_current_win()
-        local buf_name = vim.api.nvim_buf_get_name(buf)
-        local is_empty = buf_name == "" and vim.api.nvim_buf_get_changedtick(buf) == 2
-        local win_count = #vim.api.nvim_tabpage_list_wins(0)
-
-        if is_empty then
-          vim.cmd('edit ' .. entry.path)
-        elseif win_count > 1 then
-          vim.cmd('edit ' .. entry.path)
-        else
-          vim.cmd('tabedit ' .. entry.path)
-        end
-      end
-
-      telescope.setup({
+      local actions = require("telescope.actions")
+      require('telescope').setup({
         defaults = {
           border = false,
           layout_strategy = 'bottom_pane',
           layout_config = { height = 25 },
-        },
-        pickers = {
-          find_files = {
-            find_command={'rg','--files','--sortr','path'},
-            mappings = {
-              n = { ["<CR>"] = smart_open },
-              i = { ["<CR>"] = smart_open },
-            },
+          mappings = {
+            i = { ["<CR>"] = actions.select_tab, },
+            n = { ["<CR>"] = actions.select_tab, },
           },
-        }
+        },
       })
-
-      vim.keymap.set('n', '<leader>ff', builtin.find_files)
-      vim.keymap.set('n', '<leader>fg', builtin.live_grep)
-      vim.keymap.set('n', '<leader>fb', builtin.buffers)
     end,
   },
 
   {
     'neovim/nvim-lspconfig',
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+      { 'williamboman/mason.nvim', config = true }, 'williamboman/mason-lspconfig.nvim',
     },
     config = function()
-      require('mason').setup()
       require('mason-lspconfig').setup({ automatic_installation = true })
 
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local servers = { 'clangd', 'pyright', 'ts_ls', 'rust_analyzer', 'gopls', 'zls' }
-      for _, lsp in ipairs(servers) do
-        vim.lsp.config[lsp] = { capabilities = capabilities }
-      end
-
+      local servers = { 'clangd', 'pyright', 'ts_ls', 'rust_analyzer', 'gopls' }
       for _, lsp in ipairs(servers) do
         vim.lsp.enable(lsp)
       end
 
-      -- Auto-format on save
-      vim.api.nvim_create_autocmd('LspAttach', {
-        callback = function(args)
-          vim.api.nvim_create_autocmd('BufWritePre', {
-            buffer = args.buf,
-            callback = function()
-              vim.lsp.buf.format({ async = false })
-            end,
-          })
-        end,
-      })
+      local function tab_jump(location)
+        local uri = location.uri or location.targetUri
+        local range = location.range or location.targetSelectionRange
+        local file = vim.uri_to_fname(uri)
+        vim.opt.lazyredraw = true
+        vim.cmd("silent tab drop " .. vim.fn.fnameescape(file))
+        vim.api.nvim_win_set_cursor(0, { range.start.line + 1, range.start.character })
+        vim.opt.lazyredraw = false
+      end
+
+      local function goto_definition()
+        local params = vim.lsp.util.make_position_params()
+
+        vim.lsp.buf_request(0, "textDocument/definition", params, function(_, result)
+          if not result or vim.tbl_isempty(result) then
+            return
+          end
+
+          if vim.tbl_islist(result) and #result > 1 then
+            require("telescope.builtin").lsp_definitions({
+              jump_type = "tab",
+            })
+            return
+          end
+
+          tab_jump(vim.tbl_islist(result) and result[1] or result)
+        end)
+      end
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           client.server_capabilities.semanticTokensProvider = nil
 
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            buffer = args.buf,
+            callback = function()
+              vim.lsp.buf.format({ async = false })
+            end,
+          })
+
           local opts = { buffer = args.buf }
-
-          -- Smart go to definition that reuses existing tabs
-          vim.keymap.set("n", "gd", function()
-            -- Get the definition location
-            local params = vim.lsp.util.make_position_params()
-            vim.lsp.buf_request(0, 'textDocument/definition', params, function(err, result, ctx, config)
-              if err or not result or vim.tbl_isempty(result) then
-                return
-              end
-
-              -- Handle single or multiple results
-              local location = result[1] or result
-              local target_uri = location.uri or location.targetUri
-              local target_path = vim.uri_to_fname(target_uri)
-
-              -- Check if file is already open in a tab
-              for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
-                local win = vim.api.nvim_tabpage_get_win(tabpage)
-                local buf = vim.api.nvim_win_get_buf(win)
-                local buf_name = vim.api.nvim_buf_get_name(buf)
-
-                if buf_name == target_path then
-                  -- Switch to the existing tab
-                  vim.api.nvim_set_current_tabpage(tabpage)
-                  -- Jump to the position
-                  vim.lsp.util.jump_to_location(location, 'utf-8')
-                  return
-                end
-              end
-
-              -- File not open in any tab, open in new tab
-              vim.cmd('tab split')
-              vim.lsp.util.jump_to_location(location, 'utf-8')
-            end)
-          end, opts)
-
+          vim.keymap.set("n", "gd", goto_definition, opts)
           vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, opts)
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
           vim.keymap.set('n', 'ge', vim.diagnostic.goto_next, opts)
@@ -204,72 +137,30 @@ require("lazy").setup({
   },
 
   {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-    },
-    config = function()
-      local cmp = require('cmp')
-      local luasnip = require('luasnip')
-
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<PageUp>'] = cmp.mapping.scroll_docs(-4),
-          ['<PageDown>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-        }),
-        sources = {
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'buffer' },
-          { name = 'path' },
-        },
-      })
-    end,
+    'saghen/blink.cmp', version = '*',
+    opts = {
+      keymap = { preset = 'default' },
+      sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
+    }
   },
 
   {
     'nvim-treesitter/nvim-treesitter',
+    event = { 'BufReadPost', 'BufNewFile' },
     build = ':TSUpdate',
-    branch = 'master',
     config = function()
       require('nvim-treesitter.configs').setup({
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
-        ensure_installed = { "comment", "tsx", "markdown" },
+        ensure_installed = { "comment" },
       })
     end,
   },
 
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    branch = 'master',
+    event = 'VeryLazy',
     config = function()
       require('lualine').setup({
         sections = {
@@ -281,40 +172,14 @@ require("lazy").setup({
   },
 
   {
-    'lewis6991/gitsigns.nvim',
+    "loctvl842/monokai-pro.nvim",
     config = function()
-      require('gitsigns').setup({})
+      require("monokai-pro").setup({})
+      vim.cmd.colorscheme("monokai-pro")
     end,
   },
 
-  {
-    'nmac427/guess-indent.nvim',
-    config = function()
-      require('guess-indent').setup({})
-    end,
-  },
-
-  {
-    'akinsho/bufferline.nvim',
-    version = "*",
-    dependencies = 'nvim-tree/nvim-web-devicons',
-    config = function()
-      local bufferline = require("bufferline")
-      bufferline.setup({
-        options = {
-          style_preset = bufferline.style_preset.no_italic,
-          mode = "tabs",
-          show_buffer_close_icons = false,
-          show_tab_indicators = false,
-          show_buffer_icons = false,
-          always_show_bufferline = false
-        }
-      })
-    end,
-  },
-
-  {
-    "chriskempson/base16-vim",
-    config = function() vim.cmd[[colo base16-decaf]] end
-  },
+  { 'wakatime/vim-wakatime', lazy = false },
+  { 'lewis6991/gitsigns.nvim', event = { 'BufReadPre', 'BufNewFile' }, config = true },
+  { 'nmac427/guess-indent.nvim', event = { 'BufReadPre', 'BufNewFile' }, config = true },
 })
