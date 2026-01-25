@@ -137,9 +137,15 @@ require("lazy").setup({
   },
 
   {
-    'saghen/blink.cmp', version = '*',
+    'saghen/blink.cmp',
+    version = '*',
     opts = {
-      keymap = { preset = 'default' },
+      keymap = {
+        preset = 'none',
+        ['<CR>'] = { 'accept', 'fallback' },
+        ['<Tab>'] = { 'select_next', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'fallback' },
+      },
       sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
     }
   },
@@ -172,12 +178,12 @@ require("lazy").setup({
   },
 
   {
-    "loctvl842/monokai-pro.nvim",
+    "chriskempson/base16-vim",
     config = function()
-      require("monokai-pro").setup({})
-      vim.cmd.colorscheme("monokai-pro")
+      vim.cmd.colorscheme("base16-decaf")
     end,
   },
+
 
   { 'wakatime/vim-wakatime', lazy = false },
   { 'lewis6991/gitsigns.nvim', event = { 'BufReadPre', 'BufNewFile' }, config = true },
