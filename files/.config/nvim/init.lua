@@ -56,14 +56,27 @@ require("lazy").setup({
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       local actions = require("telescope.actions")
+      local action_state = require("telescope.actions.state")
+
+      -- Only open a new tab if I'm not in a split
+      local function smart_select(prompt_bufnr)
+        local entry = action_state.get_selected_entry()
+        actions.close(prompt_bufnr)
+        if vim.fn.winnr('$') == 1 then
+          vim.cmd("tab drop " .. entry.path)
+        else
+          vim.cmd("edit " .. entry.path)
+        end
+      end
+
       require('telescope').setup({
         defaults = {
           border = false,
           layout_strategy = 'bottom_pane',
           layout_config = { height = 25 },
           mappings = {
-            i = { ["<CR>"] = actions.select_tab, },
-            n = { ["<CR>"] = actions.select_tab, },
+            i = { ["<CR>"] = smart_select, },
+            n = { ["<CR>"] = smart_select, },
           },
         },
       })
@@ -144,6 +157,8 @@ require("lazy").setup({
         preset = 'none',
         ['<CR>'] = { 'accept', 'fallback' },
         ['<Tab>'] = { 'select_next', 'fallback' },
+        ['<Up>'] = { 'select_prev', 'fallback' },
+        ['<Down>'] = { 'select_next', 'fallback' },
         ['<S-Tab>'] = { 'select_prev', 'fallback' },
       },
       sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
@@ -180,10 +195,9 @@ require("lazy").setup({
   {
     "chriskempson/base16-vim",
     config = function()
-      vim.cmd.colorscheme("base16-decaf")
+      vim.cmd[[colo base16-decaf]]
     end,
   },
-
 
   { 'wakatime/vim-wakatime', lazy = false },
   { 'lewis6991/gitsigns.nvim', event = { 'BufReadPre', 'BufNewFile' }, config = true },
