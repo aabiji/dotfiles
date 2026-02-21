@@ -27,18 +27,11 @@ function fish_prompt
     set_color normal
 end
 
-# open journal entry for the current date
-function log
-    set today (date "+%Y/%B-%d") # Get today's date
-    set filepath "/home/$USER/journal/output/$today.md"
-    mkdir -p (dirname $filepath)
-    nvim $filepath
-end
-
-
-# Mkdir and cd in one command
-function mkcd
-    mkdir -p $argv[1] && cd $argv[1]
+# Backup my journal to github
+function journal
+    pushd ~/journal > /dev/null
+    git add . && git commit -m "update" && git push
+    popd > /dev/null
 end
 
 # android studio
@@ -50,6 +43,7 @@ set -gx PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/pla
 
 # flutter
 set -gx PATH $PATH ~/flutter/flutter/bin
+set --export PATH "$HOME/android-studio/flutter/bin" $PATH
 
 set -gx EDITOR "nvim"
 
@@ -58,8 +52,3 @@ alias gdb="gdb -q"
 alias rm "rm -rf"
 alias cp "cp -r"
 alias ls "ls -a --color"
-alias journal "~/journal/journal.sh"
-
-# bun
-set --export BUN_INSTALL "$HOME/.bun"
-set --export PATH $BUN_INSTALL/bin $PATH
