@@ -27,6 +27,12 @@ function fish_prompt
     set_color normal
 end
 
+function update
+    sudo apt update -y
+    sudo apt upgrade -y
+    sudo apt autoremove -y
+end
+
 # Backup my journal to github
 function journal
     pushd ~/journal > /dev/null

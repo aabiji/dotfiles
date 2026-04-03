@@ -1,0 +1,62 @@
+{
+  "title_bar": {
+    "button_layout": "platform_default",
+    "show_onboarding_banner": false,
+    "show_user_picture": false,
+    "show_sign_in": false,
+  },
+  "disable_ai": true,
+  "current_line_highlight": "gutter",
+  "icon_theme": {
+    "mode": "light",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)",
+  },
+  "scrollbar": {
+    "show": "never",
+    "diagnostics": "none",
+    "cursors": true,
+    "search_results": true,
+    "git_diff": false,
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": false,
+    },
+  },
+  "toolbar": {
+    "quick_actions": false,
+    "breadcrumbs": false,
+  },
+  "minimap": {
+    "thumb": "hover",
+    "show": "always",
+  },
+  "scroll_beyond_last_line": "off",
+  "buffer_line_height": "standard",
+  "buffer_font_family": "JetBrains Mono",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 12.5,
+  "theme": {
+    "mode": "dark",
+    "light": "VSCode Light+",
+    "dark": "Base16 OceanicNext",
+  },
+  "theme_overrides": {
+    "Base16 OceanicNext": {
+      "syntax": {
+        "variable": {
+          "color": "#C0C5CE",
+        },
+      },
+    },
+  },
+}
