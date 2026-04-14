@@ -8,7 +8,7 @@
   "disable_ai": true,
   "current_line_highlight": "gutter",
   "icon_theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "Zed (Default)",
     "dark": "Zed (Default)",
   },
@@ -44,11 +44,11 @@
   },
   "vim_mode": true,
   "ui_font_size": 16,
-  "buffer_font_size": 12.5,
+  "buffer_font_size": 13.0,
   "theme": {
     "mode": "dark",
-    "light": "VSCode Light+",
-    "dark": "Base16 OceanicNext",
+    "light": "Ayu Light",
+    "dark": "0x96f Theme",
   },
   "theme_overrides": {
     "Base16 OceanicNext": {
@@ -57,6 +57,14 @@
           "color": "#C0C5CE",
         },
       },
+    },
+  },
+  "languages": {
+    "C++": {
+      "format_on_save": "on",
+    },
+    "C": {
+      "format_on_save": "on",
     },
   },
 }

@@ -5,5 +5,4 @@ window-height = 34
 window-width = 115
 app-notifications = no-clipboard-copy
 cursor-color = cell-foreground
-theme = Oceanic Material
-background = #19333D
+theme = 0x96f

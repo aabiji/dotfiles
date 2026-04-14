@@ -48,11 +48,10 @@ set -gx ANDROID_HOME ~/Android/Sdk
 set -gx PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
 
 # flutter
-set -gx PATH $PATH ~/flutter/flutter/bin
+set -gx PATH $PATH ~/Downloads/flutter/bin
 set --export PATH "$HOME/android-studio/flutter/bin" $PATH
 
 set -gx EDITOR "nvim"
-
 alias vim="nvim"
 alias gdb="gdb -q"
 alias rm "rm -rf"
