@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo add-apt-repository ppa:neovim-ppa/stable
-sudo apt-get update
 sudo apt install -y git curl wget p7zip-full fish ninja-build cmake ripgrep wl-clipboard gh build-essential make flatpak neovim
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub com.spotify.Client
@@ -10,7 +8,7 @@ flatpak install flathub md.obsidian.Obsidian
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 curl -fsS https://dl.brave.com/install.sh | sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install --locked zellij
+curl -f https://zed.dev/install.sh | sh
 
 # Setup GitHub auth and clone repos
 cd ~ && mkdir -p ~/dev/archive && cd ~/dev/archive

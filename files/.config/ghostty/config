@@ -1,8 +1,8 @@
 font-size = 10.5
 cursor-style = block
 shell-integration-features = no-cursor
-window-height = 34
-window-width = 115
+window-height = 38
+window-width = 121
 app-notifications = no-clipboard-copy
 cursor-color = cell-foreground
 theme = 0x96f

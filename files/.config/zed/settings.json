@@ -1,4 +1,7 @@
 {
+  "project_panel": {
+    "dock": "left",
+  },
   "title_bar": {
     "button_layout": "platform_default",
     "show_onboarding_banner": false,
@@ -46,8 +49,8 @@
   "ui_font_size": 16,
   "buffer_font_size": 13.0,
   "theme": {
-    "mode": "dark",
-    "light": "Ayu Light",
+    "mode": "system",
+    "light": "Solarized Light",
     "dark": "0x96f Theme",
   },
   "theme_overrides": {
@@ -62,6 +65,8 @@
   "languages": {
     "C++": {
       "format_on_save": "on",
+      "tab_size": 2,
+      "hard_tabs": false,
     },
     "C": {
       "format_on_save": "on",

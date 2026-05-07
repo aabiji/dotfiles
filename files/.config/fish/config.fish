@@ -30,7 +30,8 @@ end
 function update
     sudo apt update -y
     sudo apt upgrade -y
-    sudo apt autoremove -y
+    sudo snap refresh
+    sudo flatpak update
 end
 
 # Backup my journal to github
@@ -38,6 +39,17 @@ function journal
     pushd ~/journal > /dev/null
     git add . && git commit -m "update" && git push
     popd > /dev/null
+end
+
+function cleanup
+    sudo apt autoremove -y
+    sudo flatpak uninstall --unused
+
+    # Remove old snap revisions
+    for line in (LANG=en_US.UTF-8 snap list --all | awk '/disabled/{print $1, $3}')
+        set parts (string split ' ' $line)
+        sudo snap remove $parts[1] --revision=$parts[2]
+    end
 end
 
 # android studio
