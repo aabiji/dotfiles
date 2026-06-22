@@ -22,6 +22,7 @@ vim.o.splitbelow = true
 
 vim.o.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.fillchars = {eob = " ", vert = " "}
 
 vim.o.inccommand = "split"
 vim.o.cursorline = false
@@ -35,9 +36,16 @@ vim.keymap.set("n", "<C-m>", ":vsplit<CR>")
 vim.keymap.set("n", "<C-n>", ":split<CR>")
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
+vim.keymap.set("n", "<Space>z", function()
+  vim.cmd("NoNeckPain")
+  local enabled = vim.opt.number:get()
+  vim.opt.number = not enabled
+  vim.opt.relativenumber = not enabled
+end)
+
 -- Hodpodge of plugins
-vim.pack.add({ "https://github.com/chriskempson/base16-vim" })
-vim.cmd[[colo base16-gruvbox-dark-hard]]
+vim.pack.add({ "https://github.com/lunacookies/vim-colors-xcode" })
+vim.cmd[[colo xcodedarkhc]]
 
 vim.api.nvim_create_autocmd("BufReadPost", {
   once = true,
@@ -47,7 +55,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
-vim.pack.add({ "https://github.com/nvim-tree/nvim-web-devicons" })
+vim.pack.add({ "https://github.com/shortcuts/no-neck-pain.nvim" })
 
 vim.api.nvim_create_autocmd("BufReadPre", {
   once = true,
@@ -59,6 +67,7 @@ vim.api.nvim_create_autocmd("BufReadPre", {
 
 -- Telescope fuzzy finder
 local telescope_plugins = {
+  "https://github.com/nvim-tree/nvim-web-devicons",
   "https://github.com/nvim-lua/plenary.nvim",
   "https://github.com/nvim-telescope/telescope.nvim",
   "https://github.com/nvim-telescope/telescope-ui-select.nvim",
@@ -132,7 +141,6 @@ require("blink.cmp").setup({
   completion = { documentation = { auto_show = true } },
   signature = { enabled = true },
 })
-require('blink.cmp').build():pwait()
 
 -- Latex
 vim.pack.add({ "https://github.com/lervag/vimtex" })
@@ -154,10 +162,12 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
-    group = group,
-    callback = function()
-        vim.cmd("VimtexStopAll")
-    end,
+  group = group,
+  callback = function()
+    if vim.b.vimtex then
+      pcall(vim.cmd, "VimtexStopAll")
+    end
+  end,
 })
 
 -- Treesitter syntax highlighting
