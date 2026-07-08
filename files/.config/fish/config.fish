@@ -38,11 +38,16 @@ function update
     sudo flatpak update
 end
 
-# Backup my journal to github
+# Backup the encrypted journal to github
 function journal
-    pushd ~/journal > /dev/null
+    fusermount -u ~/journal/public
+    pushd ~/journal/private > /dev/null
     git add . && git commit -m "update" && git push
     popd > /dev/null
+end
+
+function junlock
+    gocryptfs ~/journal/private ~/journal/public
 end
 
 function cleanup

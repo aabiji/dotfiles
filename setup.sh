@@ -9,6 +9,8 @@ flatpak install flathub md.obsidian.Obsidian
 flatpak install flathub com.spotify.Client
 curl -fsS https://dl.brave.com/install.sh | sh
 
+sudo apt purge gh papers -y
+
 # Setup GitHub auth and clone repos
 cd ~ && mkdir -p ~/dev/archive && cd ~/dev/archive
 gh auth login
@@ -17,7 +19,9 @@ gh repo list aabiji --limit 1000 | awk '{print $1; }' | xargs -L1 gh repo clone
 # Move journal and dotfiles
 cd ~
 if [ -d ~/dev/archive/journal ]; then
-    mv ~/dev/archive/journal .
+    mkdir -p ~/journal/private ~/journal/public
+    mv ~/dev/archive/journal/.* ~/dev/archive/journal/* ~/journal/private
+    rm ~/dev/archive/journal
 fi
 
 if [ -d ~/dev/archive/dotfiles ]; then
