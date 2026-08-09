@@ -27,15 +27,17 @@ function fish_prompt
     set_color normal
 end
 
-function activate
-    source .venv/bin/activate.fish
-end
-
 function update
     sudo apt update -y
     sudo apt upgrade -y
     sudo snap refresh
-    sudo flatpak update
+    sudo apt autoremove -y
+
+    # Remove old snap revisions
+    for line in (LANG=en_US.UTF-8 snap list --all | awk '/disabled/{print $1, $3}')
+        set parts (string split ' ' $line)
+        sudo snap remove $parts[1] --revision=$parts[2]
+    end
 end
 
 # Backup the encrypted journal to github
@@ -46,19 +48,11 @@ function journal
     popd > /dev/null
 end
 
-function junlock
-    gocryptfs ~/journal/private ~/journal/public
-end
-
-function cleanup
-    sudo apt autoremove -y
-    sudo flatpak uninstall --unused
-
-    # Remove old snap revisions
-    for line in (LANG=en_US.UTF-8 snap list --all | awk '/disabled/{print $1, $3}')
-        set parts (string split ' ' $line)
-        sudo snap remove $parts[1] --revision=$parts[2]
+function ju
+    if count ~/journal/public/.* >/dev/null
+        rm ~/journal/public/.* -f
     end
+    gocryptfs ~/journal/private ~/journal/public
 end
 
 # android studio
@@ -72,11 +66,7 @@ set -gx PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/pla
 set -gx PATH $PATH ~/Downloads/flutter/bin
 set --export PATH "$HOME/android-studio/flutter/bin" $PATH
 
-set -gx EDITOR "nvim"
-alias vim="nvim"
 alias gdb="gdb -q"
 alias rm "rm -rf"
 alias cp "cp -r"
 alias ls "ls -a --color"
-
-set PATH $PATH /home/aabiji/.local/bin

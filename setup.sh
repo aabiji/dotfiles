@@ -1,15 +1,15 @@
 #!/bin/bash
 
-sudo apt install -y git curl wget p7zip-full fish ninja-build cmake ripgrep gh build-essential make flatpak
-sudo add-apt-repository "deb https://ppa.launchpadcontent.net/neovim-ppa/stable/ubuntu noble main"
-sudo apt update && sudo apt install neovim
-
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub md.obsidian.Obsidian
-flatpak install flathub com.spotify.Client
-curl -fsS https://dl.brave.com/install.sh | sh
-
+sudo apt install git curl wget p7zip-full fish ninja-build cmake ripgrep gh build-essential make vim -y
 sudo apt purge gh papers -y
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+
+sudo snap install obsidian --classic
+sudo snap install nvim --classic
+sudo snap install spotify
+sudo snap remove firefox
 
 # Setup GitHub auth and clone repos
 cd ~ && mkdir -p ~/dev/archive && cd ~/dev/archive
