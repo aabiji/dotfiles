@@ -66,6 +66,9 @@ set -gx PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/pla
 set -gx PATH $PATH ~/Downloads/flutter/bin
 set --export PATH "$HOME/android-studio/flutter/bin" $PATH
 
+set -gx EDITOR vim
+set -gx LOCAL_NOTEBOOK_DEV 1 
+
 alias gdb="gdb -q"
 alias rm "rm -rf"
 alias cp "cp -r"

@@ -1,13 +1,15 @@
 #!/bin/bash
 
-sudo apt install git curl wget p7zip-full fish ninja-build cmake ripgrep gh build-essential make vim -y
-sudo apt purge gh papers -y
+# Install packages
+sudo apt update
+sudo apt install wget curl git p7zip-full fish gh build-essential make vim okular qt6ct -y
+sudo apt install ./google-chrome-stable_current_amd64.deb -y
 
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo apt install ./google-chrome-stable_current_amd64.deb
+curl -f https://zed.dev/install.sh | sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 sudo snap install obsidian --classic
-sudo snap install nvim --classic
 sudo snap install spotify
 sudo snap remove firefox
 
